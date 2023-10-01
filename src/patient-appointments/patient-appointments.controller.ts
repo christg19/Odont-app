@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
 import { PatientAppointmentsService } from './patient-appointments.service';
+import { DtoAppointment, DtoUserAppointment } from './appointment.dto';
 
 @Controller('patient-appointments')
 export class PatientAppointmentsController {
@@ -12,13 +13,19 @@ export class PatientAppointmentsController {
     }
 
     @Post()
-    RegisterAppointment() {
-        return this.appointmentService.registerAppointment()
+    RegisterAppointment(@Body() newAppointment:DtoAppointment) {
+        return this.appointmentService.registerAppointment(newAppointment)
     }
 
-    @Delete()
-    DeleteAppointment() {
-        return this.appointmentService.deleteAppointment()
+    // Citas por parte del user
+    @Post()
+    UserRegisterAppointment(@Body() newUserAppointment:DtoUserAppointment){
+        return this.appointmentService.userRegisterAppointment(newUserAppointment)
+    }
+
+    @Delete(':id')
+    DeleteAppointment(@Param('id') id:string) {
+        return this.appointmentService.deleteAppointment(id)
     }
 
 }

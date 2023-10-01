@@ -2,12 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { Appointment } from './appointment.entity';
 import { clientInMemory } from 'src/db/storageInMemory';
 import { procedimientos } from 'src/db/storageInMemory';
-import { DtoAppointment, DtoUpdatedAppointment } from './appointment.dto';
+import { DtoAppointment, DtoUpdatedAppointment, DtoUserAppointment, DtoUserAppointmentWithId } from './appointment.dto';
 import { v4 } from 'uuid';
 
 @Injectable()
 export class PatientAppointmentsService {
 
+    private userAppointmentList: DtoUserAppointmentWithId[] = [{
+        id: v4(),
+        name: "Chris",
+        desired_date:'2020-10-10',
+        procedures:procedimientos
+    }]
     
 
     private appointment: Appointment[] = [{
@@ -61,6 +67,23 @@ export class PatientAppointmentsService {
     deleteAppointment(id:string){
         return this.appointment = this.appointment.filter(appointment => appointment.id !== id)
       
+    }
+
+    userRegisterAppointment(newUserAppointment:DtoUserAppointment){
+        const { name, desired_date, procedures } = newUserAppointment;
+
+        const userAppointment: DtoUserAppointmentWithId = {
+            id: v4(),
+            name: newUserAppointment.name,
+            desired_date:newUserAppointment.desired_date,
+            procedures: newUserAppointment.procedures
+        }
+
+        this.userAppointmentList.push(userAppointment)
+
+        return this.userAppointmentList;
+
+
     }
 
 }
