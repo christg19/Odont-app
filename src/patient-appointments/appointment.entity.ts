@@ -5,6 +5,7 @@ export type Procedures = {
   };
 
 export class Appointment {
+    id:string
     patient: Client["name"]
     date:string
     procedures: Procedures
