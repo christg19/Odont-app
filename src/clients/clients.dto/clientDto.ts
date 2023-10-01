@@ -1,4 +1,4 @@
-import { IsIn, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from 'class-validator'
+import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from 'class-validator'
 import { AppointmentsStatus } from '../client.entity'
 
 export class DtoClient {

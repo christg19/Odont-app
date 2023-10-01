@@ -6,7 +6,7 @@ import { v4 } from 'uuid'
 @Injectable()
 export class ClientsService {
 
-    private clientInMemory:Client[] = [{
+    public clientInMemory:Client[] = [{
         id:v4(),
         name:"Chris",
         id_cedula:"402-3181906-7",
