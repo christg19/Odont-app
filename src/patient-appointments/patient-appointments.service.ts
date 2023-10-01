@@ -30,6 +30,14 @@ export class PatientAppointmentsService {
     getOneAppointment(id:string){
         return this.appointment.find(appointment => appointment.id === id)
     }
+
+    getAllUserAppointment(){
+        return this.userAppointmentList
+    }
+
+    getUserAppointment(id:string){
+        return this.userAppointmentList.find(userAppointment => userAppointment.id === id)
+    }
     
     registerAppointment(newAppointment: DtoAppointment){
 
