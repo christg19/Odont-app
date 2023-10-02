@@ -14,7 +14,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     username: 'root',
     password: 'testDatabase',
     database: 'odotdb',
-    entities: [__dirname + '/**/*.entity{.ts,.js}']
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    synchronize: true,
+    autoLoadEntities: true
   }), ClientsModule, PatientAppointmentsModule, DentalRecordModule],
   controllers: [UserAppointmentController],
   providers: [UserAppointmentService],
