@@ -17,6 +17,8 @@ export const procedimientos: Procedures = {
     texts: ["texto1", "texto2", "texto3"]
   };
   
+
+
   
   
   
