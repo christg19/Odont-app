@@ -37,7 +37,7 @@ export class DentalRecordService {
         dentalRecord.medicalHistory = newDentalRecord.medicalHistory;
         dentalRecord.proceduresPerformed = newDentalRecord.proceduresPerformed;
         dentalRecord.client = client;
-        // Agregar que solo se puedae crear un dentalRecord por paciente
+        dentalRecord.clientName = client.name;
 
         return this.dentalRecordRepository.save(dentalRecord);
     }

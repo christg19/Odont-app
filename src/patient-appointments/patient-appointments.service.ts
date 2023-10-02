@@ -38,6 +38,7 @@ export class PatientAppointmentsService {
         appointment.status = newAppointment.status;
         appointment.dateHour = newAppointment.dateHour;
         appointment.client = cliente;
+        appointment.clientName = cliente.name;
 
         return this.appointmentRepository.save(appointment);
 
