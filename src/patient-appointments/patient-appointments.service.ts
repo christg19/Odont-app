@@ -7,15 +7,7 @@ import { v4 } from 'uuid';
 
 @Injectable()
 export class PatientAppointmentsService {
-
-    private userAppointmentList: DtoUserAppointmentWithId[] = [{
-        id: v4(),
-        name: "Chris",
-        desired_date:'2020-10-10',
-        procedures:procedimientos
-    }]
     
-
     private appointment: Appointment[] = [{
         id:v4(),
         patient: clientInMemory.name,
@@ -30,15 +22,7 @@ export class PatientAppointmentsService {
     getOneAppointment(id:string){
         return this.appointment.find(appointment => appointment.id === id)
     }
-
-    getAllUserAppointment(){
-        return this.userAppointmentList
-    }
-
-    getUserAppointment(id:string){
-        return this.userAppointmentList.find(userAppointment => userAppointment.id === id)
-    }
-    
+ 
     registerAppointment(newAppointment: DtoAppointment){
 
         const { patient, date, procedures } = newAppointment;
@@ -76,22 +60,5 @@ export class PatientAppointmentsService {
         return this.appointment = this.appointment.filter(appointment => appointment.id !== id)
       
     }
-
-    userRegisterAppointment(newUserAppointment:DtoUserAppointment){
-        const { name, desired_date, procedures } = newUserAppointment;
-
-        const userAppointment: DtoUserAppointmentWithId = {
-            id: v4(),
-            name: newUserAppointment.name,
-            desired_date:newUserAppointment.desired_date,
-            procedures: newUserAppointment.procedures
-        }
-
-        this.userAppointmentList.push(userAppointment)
-
-        return this.userAppointmentList;
-
-
-    }
-
+    
 }

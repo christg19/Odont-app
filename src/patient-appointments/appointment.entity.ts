@@ -1,8 +1,8 @@
 import { Client } from "src/clients/client.entity"
 
-export type Procedures = {
-    name_procedures: string[];
-  };
+export interface Procedures {
+  texts: string[];
+}
 
 export class Appointment {
     id:string

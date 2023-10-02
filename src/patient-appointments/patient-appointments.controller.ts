@@ -11,28 +11,10 @@ export class PatientAppointmentsController {
     getAllAppointments() {
         return this.appointmentService.getAllAppointments()
     }
-    
-    // Ver citas prog by users
-    @Get()
-    getAllUserAppointment(){
-        return this.appointmentService.getAllUserAppointment()
-    }
-
-    // Ver cita de user por id 
-    @Get(':id')
-    getOneUserAppointment(@Param('id') id:string){
-        return this.appointmentService.getUserAppointment(id)
-    }
 
     @Post()
     RegisterAppointment(@Body() newAppointment:DtoAppointment) {
         return this.appointmentService.registerAppointment(newAppointment)
-    }
-
-    // Citas por parte del user
-    @Post()
-    UserRegisterAppointment(@Body() newUserAppointment:DtoUserAppointment){
-        return this.appointmentService.userRegisterAppointment(newUserAppointment)
     }
 
     @Delete(':id')
