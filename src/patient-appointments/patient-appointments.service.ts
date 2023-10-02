@@ -24,11 +24,11 @@ export class PatientAppointmentsService {
         })
     }
  
-    async registerAppointment(newAppointment: DtoAppointment, userId:number){
+    async registerAppointment(newAppointment: DtoAppointment){
 
         const cliente = await this.clientRepository.findOne({
             where: {
-                id: userId
+                id: newAppointment.userId
             }
         })
 
@@ -44,12 +44,12 @@ export class PatientAppointmentsService {
     }
 
     updateAppointment(newAppointment:DtoUpdatedAppointment, userId:number){
-    
+        this.appointmentRepository.update(userId, newAppointment)
     }
 
     deleteAppointment(id:number){
-       
-      
+       return this.appointmentRepository.delete(id)
+    
     }
     
 }

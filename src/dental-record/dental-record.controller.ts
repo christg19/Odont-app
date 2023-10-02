@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param,Post, Put } from '@nestjs/common';
 import { DentalRecordService } from './dental-record.service';
 import { DtoDentalRecord, DtoUpdatedDentalRecord } from './dental-record.dto';
+import { DentalRecord } from './dental-record.entity';
 
 @Controller('dental-record')
 export class DentalRecordController {
@@ -18,8 +19,8 @@ export class DentalRecordController {
     }
 
     @Post()
-    registerDentalRecord(@Body() details:string, id:number ){
-        return this.dentalRecordService.registerDentalRecord( id, details)
+    registerDentalRecord(@Body() newDentalRecord:DtoDentalRecord ){
+        return this.dentalRecordService.registerDentalRecord(newDentalRecord)
     }
 
     @Put(':id')

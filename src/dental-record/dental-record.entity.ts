@@ -7,11 +7,11 @@ export class DentalRecord {
     id: number;
 
     @Column('text', { nullable: true })
-    historialMedico: string;
+    medicalHistory: string[];
 
     @Column('text', { nullable: true })
-    procedimientosRealizados: string;
+    proceduresPerformed: string;
 
     @ManyToOne(() => Client, client => client.dentalRecord)
-    paciente: Client;
+    client: Client;
 }

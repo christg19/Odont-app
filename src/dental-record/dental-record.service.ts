@@ -25,17 +25,18 @@ export class DentalRecordService {
         })
     }
 
-    async registerDentalRecord( userId:number, details:string){
-        const cliente = await this.clientRepository.findOne({
+    async registerDentalRecord( newDentalRecord:DtoDentalRecord){
+        const client = await this.clientRepository.findOne({
             where:{
-                id: userId
+                id: newDentalRecord.userId
             }
         })
-        if(!cliente) throw new error ('Client not found')
+        if(!client) throw new error ('Client not found')
 
         const dentalRecord = new DentalRecord();
-        dentalRecord.procedimientosRealizados = details || "";
-        dentalRecord.paciente = cliente;
+        dentalRecord.medicalHistory = newDentalRecord.medicalHistory;
+        dentalRecord.proceduresPerformed = newDentalRecord.proceduresPerformed;
+        dentalRecord.client = client;
         // Agregar que solo se puedae crear un dentalRecord por paciente
 
         return this.dentalRecordRepository.save(dentalRecord);

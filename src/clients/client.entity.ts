@@ -22,7 +22,7 @@ export class Client {
     @Column({ nullable: true })
     email: string;
 
-    @OneToMany(() => DentalRecord, dentalRecord => dentalRecord.paciente)
+    @OneToMany(() => DentalRecord, dentalRecord => dentalRecord.client)
     dentalRecord: DentalRecord[];
 
     @OneToMany(() => Appointment, appointment => appointment.client)

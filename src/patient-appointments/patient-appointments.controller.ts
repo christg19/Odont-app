@@ -13,8 +13,8 @@ export class PatientAppointmentsController {
     }
 
     @Post()
-    registerAppointment(@Body() newAppointment:DtoAppointment, userId:number) {
-        return this.appointmentService.registerAppointment(newAppointment, userId)
+    registerAppointment(@Body() newAppointment:DtoAppointment) {
+        return this.appointmentService.registerAppointment(newAppointment)
     }
     
     @Put(':id')
