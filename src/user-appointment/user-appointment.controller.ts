@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { UserAppointmentService } from './user-appointment.service';
-import { DtoUserAppointment } from 'src/patient-appointments/appointment.dto';
+import { DtoAppointment } from 'src/patient-appointments/appointment.dto';
 
 @Controller('user-appointment')
 export class UserAppointmentController {
@@ -21,7 +21,7 @@ export class UserAppointmentController {
 
     // Citas por parte del user
     @Post()
-    UserRegisterAppointment(@Body() newUserAppointment:DtoUserAppointment){
+    UserRegisterAppointment(@Body() newUserAppointment:DtoAppointment){
         return this.userAppointmentService.userRegisterAppointment(newUserAppointment)
     }
 

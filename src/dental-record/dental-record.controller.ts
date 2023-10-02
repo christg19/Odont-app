@@ -13,22 +13,22 @@ export class DentalRecordController {
     }
 
     @Get(':id')
-    getOneDentalRecord(@Param('id') id:string ){
+    getOneDentalRecord(@Param('id') id:number ){
         return this.dentalRecordService.getOneDentalRecord(id)
     }
 
     @Post()
-    registerDentalRecord(@Body() newDentalRecord:DtoDentalRecord, id:string){
-        return this.dentalRecordService.registerDentalRecord(newDentalRecord, id)
+    registerDentalRecord(@Body() details:string, id:number ){
+        return this.dentalRecordService.registerDentalRecord( id, details)
     }
 
     @Put(':id')
-    updateDentalRecord(@Param('id') id:string, @Body() updatedDentalRecord:DtoUpdatedDentalRecord){
+    updateDentalRecord(@Param('id') id:number, @Body() updatedDentalRecord:DtoUpdatedDentalRecord){
         return this.dentalRecordService.updateDentalRecord(updatedDentalRecord, id)
     }
 
     @Delete(':id')
-    deleteDentalRecord(@Param('id') id:string){
+    deleteDentalRecord(@Param('id') id:number){
         return this.dentalRecordService.deleteDentalRecord(id)
     }
 

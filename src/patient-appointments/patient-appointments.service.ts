@@ -1,63 +1,54 @@
 import { Injectable } from '@nestjs/common';
 import { Appointment } from './appointment.entity';
-import { clientInMemory } from 'src/db/storageInMemory';
-import { procedimientos } from 'src/db/storageInMemory';
-import { DtoAppointment, DtoUpdatedAppointment, DtoUserAppointment, DtoUserAppointmentWithId } from './appointment.dto';
-import { v4 } from 'uuid';
+import { DtoAppointment, DtoUpdatedAppointment } from './appointment.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Client } from 'src/clients/client.entity';
+
 
 @Injectable()
 export class PatientAppointmentsService {
     
-    private appointment: Appointment[] = [{
-        id:v4(),
-        patient: clientInMemory.name,
-        date: "2023-10-1",
-        procedures:procedimientos
-    }]
+    constructor(@InjectRepository(Client) private clientRepository:Repository<Client>,
+    @InjectRepository(Appointment) private appointmentRepository:Repository<Appointment>){}
 
     getAllAppointments(){
-        return this.appointment
+       return this.appointmentRepository.find();
     }
 
-    getOneAppointment(id:string){
-        return this.appointment.find(appointment => appointment.id === id)
+    getOneAppointment(id:number){
+        return this.appointmentRepository.findOne({
+            where:{
+                id: id
+            }
+        })
     }
  
-    registerAppointment(newAppointment: DtoAppointment){
+    async registerAppointment(newAppointment: DtoAppointment, userId:number){
 
-        const { patient, date, procedures } = newAppointment;
+        const cliente = await this.clientRepository.findOne({
+            where: {
+                id: userId
+            }
+        })
 
-        const appointment:Appointment = {
-            id: v4(),
-            patient,
-            date,
-            procedures
-        }
+        const appointment = new Appointment();
 
-        this.appointment.push(appointment);
+        appointment.notes = newAppointment.notes;
+        appointment.status = newAppointment.status;
+        appointment.dateHour = newAppointment.dateHour;
+        appointment.client = cliente;
 
-        return this.appointment;
+        return this.appointmentRepository.save(appointment);
+
     }
 
-    updateAppointment(newAppointment:DtoUpdatedAppointment, id:string){
-        let actualAppointment = this.appointment.find(appointment => appointment.id === id);
-
-        const updatedAppointment: Appointment = {
-            id: actualAppointment.id,
-            patient: newAppointment.patient || actualAppointment.patient,
-            date: newAppointment.date || actualAppointment.date,
-            procedures: newAppointment.procedures || actualAppointment.procedures
-        }
-
-        this.deleteAppointment(actualAppointment.id);
-
-        this.appointment.push(updatedAppointment);
-
-        return updatedAppointment;
+    updateAppointment(newAppointment:DtoUpdatedAppointment, userId:number){
+    
     }
 
-    deleteAppointment(id:string){
-        return this.appointment = this.appointment.filter(appointment => appointment.id !== id)
+    deleteAppointment(id:number){
+       
       
     }
     

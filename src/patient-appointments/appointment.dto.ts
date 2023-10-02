@@ -1,26 +1,12 @@
-import { Procedures } from "./appointment.entity"
-
 export class DtoAppointment {
-    patient: string
-    date: string
-    procedures: Procedures
+    notes:string
+    dateHour:Date
+    status:string
 }
 
 export class DtoUpdatedAppointment {
-    patient: string
-    date: string
-    procedures: Procedures
+    notes?:string
+    dateHour?:Date
+    status?:string
 }
 
-export class DtoUserAppointment {
-    name:string
-    desired_date:string
-    procedures: Procedures
-}
-
-export class DtoUserAppointmentWithId {
-    id:string
-    name:string
-    desired_date:string
-    procedures: Procedures
-}
