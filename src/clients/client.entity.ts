@@ -1,16 +1,32 @@
-export enum AppointmentsStatus {
-    NONE = 'NONE',
-    SOMETHING = "SOMETHING",
-    
-}
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { DentalRecord } from 'src/dental-record/dental-record.entity';
+import { Appointment } from 'src/patient-appointments/appointment.entity';
 
+@Entity()
 export class Client {
-    id:string
-    name:string
-    id_cedula:string
-    age:number
-    tel:string
-    appointment:AppointmentsStatus
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    name: string;
+
+    @Column({ nullable: true })
+    age: number;
+
+    @Column({ nullable: true })
+    address: string;
+
+    @Column({ nullable: true })
+    tel: string;
+
+    @Column({ nullable: true })
+    email: string;
+
+    @OneToMany(() => DentalRecord, dentalRecord => dentalRecord.paciente)
+    dentalRecord: DentalRecord[];
+
+    @OneToMany(() => Appointment, appointment => appointment.client)
+    appointment: Appointment[];
 }
 
 

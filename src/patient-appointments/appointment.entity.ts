@@ -1,13 +1,20 @@
-import { Client } from "src/clients/client.entity"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Client } from 'src/clients/client.entity';
 
-export interface Procedures {
-  texts: string[];
-}
-
+@Entity()
 export class Appointment {
-    id:string
-    patient: Client["name"]
-    date:string
-    procedures: Procedures
+    @PrimaryGeneratedColumn()
+    id: number;
 
+    @Column()
+    dateHour: Date;
+
+    @Column('text', { nullable: true })
+    notes: string;
+
+    @Column()
+    status: string;
+
+    @ManyToOne(() => Client, client => client.appointment)
+    client: Client;
 }
