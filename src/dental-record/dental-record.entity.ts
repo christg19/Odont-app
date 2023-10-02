@@ -4,7 +4,7 @@ import { Client } from 'src/clients/client.entity';
 @Entity()
 export class DentalRecord {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column('text', { nullable: true })
     historialMedico: string;
