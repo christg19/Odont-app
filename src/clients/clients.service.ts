@@ -1,66 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { AppointmentsStatus, Client } from './client.entity';
 import { DtoUpdatedClient, DtoClient } from './clients.dto/clientDto';
-import { v4 } from 'uuid'
+import { InjectRepository } from '@nestjs/typeorm';
+import { Client } from './client.entity';
+import { Repository } from 'typeorm'
 
 @Injectable()
 export class ClientsService {
 
-    public clientInMemory:Client[] = [{
-        id:v4(),
-        name:"Chris",
-        id_cedula:"402-3181906-7",
-        age:21,
-        tel:"829-533-2795",
-        appointment:AppointmentsStatus.NONE,
-    }]
+    constructor(@InjectRepository(Client) private clientRepository:Repository<Client>){}
 
     getAllClients(){
-        return this.clientInMemory
+        return this.clientRepository.find();
     }
 
-    getOneClient(id:string):Client{
-        return this.clientInMemory.find(client => client.id === id)
+    getOneClient(id:number){
+        return this.clientRepository.findOne({
+            where: {
+                id: id 
+            }
+        });
     }
 
     createClient(newClient: DtoClient){
-        const { name, id_cedula, age, tel } = newClient;
-
-        const client:Client = {
-            id: v4(),
-            name,
-            id_cedula,
-            age,
-            tel,
-            appointment: AppointmentsStatus.NONE
-        };
-
-        this.clientInMemory.push(client);
-
-        return this.clientInMemory;
+        const client = this.clientRepository.create(newClient);
+        return this.clientRepository.save(client);
     }
 
-    updateClient(newClient: DtoUpdatedClient, id:string){
-
-        let actualClient = this.clientInMemory.find(client => client.id === id)
-
-        const updatedClient:Client = {
-            id: actualClient.id,
-            name: newClient.name || actualClient.name,
-            id_cedula: newClient.id_cedula || actualClient.id_cedula,
-            age: newClient.age || actualClient.age,
-            tel: newClient.tel || actualClient.tel,
-            appointment: newClient.appointment || actualClient.appointment
-        };
-
-        this.deleteClient(actualClient.id);
-
-        this.clientInMemory.push(updatedClient);
-
-        return updatedClient;
+    updateClient(newClient: DtoUpdatedClient, id:number){
+        return this.clientRepository.update({id}, newClient)
     }
 
-    deleteClient(id: string){
-        return this.clientInMemory = this.clientInMemory.filter(client => client.id !== id)
+    deleteClient(id: number){
+        return this.clientRepository.delete(id)
     }
 }
