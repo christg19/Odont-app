@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     port: 3306,
     username: 'root',
     password: 'testDatabase',
-    database: 'odotdb',
+    database: 'odontdb',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
     autoLoadEntities: true
@@ -22,3 +22,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [UserAppointmentService],
 })
 export class AppModule {}
+// docker run --name odontdb -e MYSQL_ROOT_PASSWORD=testDatabase MYSQL_DATABASE=odontdb -p 3306:3306 -d mysql:latest
