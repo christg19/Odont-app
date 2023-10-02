@@ -17,17 +17,17 @@ export class ClientsController {
     }
 
     @Post()
-    RegisterClient(@Body() newClient:DtoClient){
+    registerClient(@Body() newClient:DtoClient){
         return this.clientService.createClient(newClient)
     }
 
     @Put(':id')
-    UpdateClient(@Param('id') id:string, @Body() updatedClient:DtoUpdatedClient){
+    updateClient(@Param('id') id:string, @Body() updatedClient:DtoUpdatedClient){
         return this.clientService.updateClient(updatedClient, id)
     }
 
     @Delete(':id')
-    DeleteClient(@Param('id') id:string){
+    deleteClient(@Param('id') id:string){
         return this.clientService.deleteClient(id)
     }
 }
