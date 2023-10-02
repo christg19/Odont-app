@@ -14,4 +14,7 @@ export class DentalRecord {
 
     @ManyToOne(() => Client, client => client.dentalRecord)
     client: Client;
+
+    @Column('text', { nullable: true })
+    clientName: string;
 }

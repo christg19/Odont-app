@@ -17,4 +17,7 @@ export class Appointment {
 
     @ManyToOne(() => Client, client => client.appointment)
     client: Client;
+
+    @Column()
+    clientName: string;
 }
