@@ -1,52 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { DtoDentalRecord, DtoUpdatedDentalRecord } from './dental-record.dto';
+import { CreateDentalRecordDto, UpdateDentalRecordDto } from './dto';
 import { DentalRecord } from './dental-record.entity';
-import { Client } from 'src/clients/client.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { error } from 'console';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class DentalRecordService {
 
-    constructor(@InjectRepository(Client) private clientRepository:Repository<Client>,
-    @InjectRepository(DentalRecord) private dentalRecordRepository:Repository<DentalRecord>
-    ){}
+    constructor(@InjectModel(DentalRecord) private dentalRecordModel: typeof DentalRecord ){}
 
-    getAllDentalRecords(){
-        return this.dentalRecordRepository.find();
+    async getAllDentalRecords(): Promise<DentalRecord[]>{
+        return this.dentalRecordModel.findAll();
     }
-    
-    getOneDentalRecord(id:number){
-        return this.dentalRecordRepository.findOne({
-            where:{
+
+    async getOneDentalRecord(id:number): Promise<DentalRecord>{
+        return this.dentalRecordModel.findOne({
+            where: {
                 id: id
             }
-        })
+        });
     }
 
-    async registerDentalRecord( newDentalRecord:DtoDentalRecord){
-        const client = await this.clientRepository.findOne({
+    async createDentalRecord(dto: CreateDentalRecordDto): Promise <void>{
+        this.dentalRecordModel.create(dto);
+    }
+
+    async updateDentalRecord(dto: UpdateDentalRecordDto, id:number){
+       const dentalRecord = await this.dentalRecordModel.findOne({
+        where:{
+            id:id
+        }
+       });
+
+       await dentalRecord.update({
+        dentalIssue: dto.dentalIssue
+       });
+    }
+
+    async deleteDentalRecord(id: number): Promise <void>{
+        const dentalRecord = await this.dentalRecordModel.findOne({
             where:{
-                id: newDentalRecord.userId
+                id:id
             }
         })
-        if(!client) throw new error ('Client not found')
 
-        const dentalRecord = new DentalRecord();
-        dentalRecord.medicalHistory = newDentalRecord.medicalHistory;
-        dentalRecord.proceduresPerformed = newDentalRecord.proceduresPerformed;
-        dentalRecord.client = client;
-        dentalRecord.clientName = client.name;
+        await dentalRecord.destroy()
 
-        return this.dentalRecordRepository.save(dentalRecord);
-    }
-
-    updateDentalRecord(updatedDentalRecord:DtoUpdatedDentalRecord, id:number){
-        return this.dentalRecordRepository.update({id}, updatedDentalRecord);
-    }
-
-    deleteDentalRecord(id:number){
-        return this.dentalRecordRepository.delete(id);
     }
 }

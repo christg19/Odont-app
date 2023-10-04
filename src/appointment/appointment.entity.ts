@@ -2,13 +2,16 @@ import { Table, Column, Model, BelongsTo, ForeignKey } from 'sequelize-typescrip
 import { Patient } from 'src/patient/patient.entity';
 
 @Table
-export class DentalRecord extends Model<DentalRecord> {
+export class Appointment extends Model<Appointment> {
   @Column
-  dentalIssue: string;
+  appointmentDate: Date;
 
   @ForeignKey(() => Patient) 
   @Column
   patientId: number;
+
+  @Column
+  notes:string
 
   @BelongsTo(() => Patient)
   patient: Patient;

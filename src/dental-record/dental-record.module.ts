@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { DentalRecord } from './dental-record.entity';
 import { DentalRecordService } from './dental-record.service';
-import { DentalRecord } from './dental-record.entity'; 
-import { Client } from 'src/clients/client.entity';
 import { DentalRecordController } from './dental-record.controller';
+import { Patient } from 'src/patient/patient.entity';
+import { Appointment } from 'src/appointment/appointment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DentalRecord, Client])],
-  controllers: [DentalRecordController],
+  imports: [SequelizeModule.forFeature([DentalRecord, Patient, Appointment])],
   providers: [DentalRecordService],
+  controllers: [DentalRecordController],
 })
 export class DentalRecordModule {}
 
