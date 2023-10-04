@@ -30,10 +30,7 @@ export class DentalRecordService {
             id:id
         }
        });
-
-       await dentalRecord.update({
-        dentalIssue: dto.dentalIssue
-       });
+       await dentalRecord.update(dto);
     }
 
     async deleteDentalRecord(id: number): Promise <void>{
