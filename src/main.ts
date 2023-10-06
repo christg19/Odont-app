@@ -5,6 +5,8 @@ import { Patient } from './patient/patient.entity';
 import { Appointment } from './appointment/appointment.entity';
 import { DentalRecord } from './dental-record/dental-record.entity';
 import { ValidationPipe } from '@nestjs/common';
+import { Service } from './service/service.entity';
+import { CustomerInvoice } from './customer-invoice/customer-invoice.entity';
 
 async function bootstrap() {
   const sequelize = new Sequelize({
@@ -14,7 +16,7 @@ async function bootstrap() {
     username: 'root',
     password: 'testDatabase',
     database: 'odontdb',
-    models: [Patient, Appointment, DentalRecord],
+    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice],
   });
   
   await sequelize.sync(); 

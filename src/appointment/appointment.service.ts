@@ -2,15 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { Appointment } from './appointment.entity';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { DentalRecord } from 'src/dental-record/dental-record.entity';
+import { Service } from 'src/service/service.entity';
+import Sequelize from 'sequelize';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class AppointmentsService {
     
-    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment){}
+    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment,
+    @InjectModel(Service) private serviceModel: typeof Service){}
 
     async getAppointments(): Promise<Appointment[]>{
-       return this.appointmentModel.findAll();
+        const appointmentWithService = await Appointment.findAll({
+            include: [
+                {
+                    model: Service,
+                    as: 'service', 
+                    attributes: ['id', 'name', 'cost']
+                }
+            ]
+        });
+        return appointmentWithService;
     }
 
     async getAppointmentById(id:number): Promise<Appointment>{
@@ -21,10 +33,30 @@ export class AppointmentsService {
         });
     }
  
-    async createAppointment(dto: CreateAppointmentDto){
-        this.appointmentModel.create(dto);
-       
-
+    async createAppointment(dto: CreateAppointmentDto) {
+        const services = await Service.findAll({
+            where: {
+                id: {
+                    [Sequelize.Op.in]: dto.serviceIds
+                }
+            }
+        });
+    
+        if (services.length === dto.serviceIds.length) {
+            const appointmentData = {
+                appointmentDate: dto.appointmentDate,
+                notes: dto.notes,
+                patientId: dto.patientId
+            };
+    
+            const appointment = await this.appointmentModel.create(appointmentData);
+            
+            await appointment.$set('services', services);
+    
+            return appointment;
+        } else {
+            throw new Error('Algunos IDs de servicio proporcionados no son válidos.');
+        }
     }
 
     async updateAppointment(dto: UpdateAppointmentDto, id:number){

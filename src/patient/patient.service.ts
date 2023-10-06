@@ -27,14 +27,14 @@ export class ClientsService {
         this.patientModel.create(newPatient);
     }
 
-    async updatePatient(newClient: UpdatePatientDto, id:number){
+    async updatePatient(newPatient: UpdatePatientDto, id:number){
        const patient = await this.patientModel.findOne({
         where:{
             id:id
         }
        });
 
-       await patient.update(newClient);
+       await patient.update(newPatient);
     }
 
     async deletePatient(id: number): Promise <void>{
