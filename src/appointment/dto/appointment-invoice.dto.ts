@@ -14,7 +14,7 @@ export class interfaceAppointmentDto {
     constructor(appointment:Appointment){
         this.appointmentDate = appointment.appointmentDate
         this.notes = appointment.notes
-        this.service = appointment.services
+        this.service = appointment.service
         this.patientId = appointment.patientId
     }
 

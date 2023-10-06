@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

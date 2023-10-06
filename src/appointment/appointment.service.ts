@@ -51,7 +51,7 @@ export class AppointmentsService {
     
             const appointment = await this.appointmentModel.create(appointmentData);
             
-            await appointment.$set('services', services);
+            await appointment.$set('service', services);
     
             return appointment;
         } else {

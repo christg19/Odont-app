@@ -24,6 +24,22 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
+
+  try {
+    await Patient.sync({ force: true }); 
+    console.log('User model synchronized successfully.');
+    await DentalRecord.sync({ force: true }); 
+    console.log('User model synchronized successfully.');
+    await Appointment.sync({ force: true }); 
+    console.log('User model synchronized successfully.');
+    await Service.sync({ force: true }); 
+    console.log('User model synchronized successfully.');
+    await CustomerInvoice.sync({ force: true }); 
+    console.log('User model synchronized successfully.');
+  } catch (error) {
+    console.error('Error synchronizing User model:', error);
+  }
 }
+
 bootstrap();
 

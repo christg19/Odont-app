@@ -15,7 +15,7 @@ export class Appointment extends Model<Appointment> {
   notes:string
 
   @HasMany(() => Service)
-  services: Service[];
+  service: Service[];
 
   @BelongsTo(() => Patient)
   patient: Patient;

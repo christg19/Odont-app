@@ -49,7 +49,7 @@ export class CustomerInvoiceService {
             throw new Error('Cita no encontrada');
         }
 
-        const totalCost = appointment.services.reduce((total, service) => total + service.cost, 0);
+        const totalCost = appointment.service.reduce((total, service) => total + service.cost, 0);
 
         // Crear la factura del cliente
         const customerInvoice = await this.customerInvoiceModel.create({
