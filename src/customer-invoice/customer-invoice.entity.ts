@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey, BelongsTo, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, BelongsTo, HasMany, NotNull, DataType } from 'sequelize-typescript';
 import { Patient } from 'src/patient/patient.entity';
 import { Appointment } from 'src/appointment/appointment.entity';
 import { Service } from 'src/service/service.entity';
@@ -24,10 +24,11 @@ export class CustomerInvoice extends Model<CustomerInvoice> {
     @ForeignKey(() => Appointment)
     @Column
     appointmentId: number;
-
+    
     @BelongsTo(() => Appointment)
     appointment: Appointment;
 
     @Column(DataType.ARRAY(DataType.JSONB))
-    services: Service[];
+    service: Service[];
+
 }

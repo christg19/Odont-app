@@ -28,19 +28,18 @@ export class CustomerInvoiceService {
     async createCustomerInvoice(dto: CreateCustomerInvoiceDto) {
         const { appointmentId } = dto;
 
-        // Buscar el Appointment por su id
         const appointment = await Appointment.findOne({
             where: {
                 id: appointmentId,
             },
             include: [
                 {
-                    model: Patient, // Incluir el modelo Patient para obtener el patientId
-                    attributes: ['id', 'name'], // Seleccionar solo las propiedades necesarias
+                    model: Patient, 
+                    attributes: ['id', 'name'], 
                 },
                 {
-                    model: Service, // Incluir el modelo Service para obtener los servicios
-                    attributes: ['id', 'cost'], // Seleccionar solo las propiedades necesarias
+                    model: Service, 
+                    attributes: ['id',"name", 'cost'],
                 },
             ],
         });
@@ -49,14 +48,17 @@ export class CustomerInvoiceService {
             throw new Error('Cita no encontrada');
         }
 
-        const totalCost = appointment.service.reduce((total, service) => total + service.cost, 0);
+        const totalCost:number = appointment.service.reduce((total, service) => total + service.cost, 0);
+        const serviceIds: Service[] = appointment.service.map(service => service);
 
-        // Crear la factura del cliente
-        const customerInvoice = await this.customerInvoiceModel.create({
+   
+        const customerInvoice:CustomerInvoice = await this.customerInvoiceModel.create({
             patientName: appointment.patient.name,
+            patientId:appointment.patientId,
             cost: totalCost,
             dateAppointment: appointment.appointmentDate,
             appointmentId: appointment.id,
+            service: serviceIds
         });
 
         return customerInvoice;
