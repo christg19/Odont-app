@@ -26,21 +26,20 @@ export class AppointmentsService {
     }
 
     async getAppointmentById(id: number): Promise<Appointment> {
-        if (id !== null && undefined) {
+      if(id <= 0){
+        throw new Error("El ID no es valido");
+      };
             return this.appointmentModel.findOne({
                 where: {
                     id: id
                 }
             });
-        } else {
-            throw new Error("El ID no es valido")
-        }
     }
 
     async createAppointment(dto: CreateAppointmentDto) {
         let services: Service[] = null;
 
-        if (dto.serviceIds !== null && undefined) {
+        if (dto.serviceIds !== null && dto.serviceIds !== undefined) {
             services = await Service.findAll({
                 where: {
                     id: {
@@ -83,6 +82,7 @@ export class AppointmentsService {
         }
 
         await appointment.update(dto);
+        return 'La cita fue actualizada correctamente'
 
     }
 

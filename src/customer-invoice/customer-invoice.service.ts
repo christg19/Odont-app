@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CustomerInvoice } from './customer-invoice.entity';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateCustomerInvoiceDto} from './dto';
+import { CreateCustomerInvoiceDto } from './dto';
 import { Patient } from 'src/patient/patient.entity';
 import { Service } from 'src/service/service.entity';
 import { Appointment } from 'src/appointment/appointment.entity';
@@ -17,51 +17,60 @@ export class CustomerInvoiceService {
     }
 
     async getCustomerInvoiceById(id: number): Promise<CustomerInvoice> {
-        return this.customerInvoiceModel.findOne({
-            where: {
-                id: id
-            }
-        })
+        if (id !== null && id !== undefined) {
+            return this.customerInvoiceModel.findOne({
+                where: {
+                    id: id
+                }
+            });
+        } else {
+            throw new NotFoundException
+        }
+
     }
 
     async createCustomerInvoice(dto: CreateCustomerInvoiceDto) {
-        const { appointmentId } = dto;
+        let appointment: Appointment = null;
 
-        const appointment = await Appointment.findOne({
-            where: {
-                id: appointmentId,
-            },
-            include: [
-                {
-                    model: Patient, 
-                    attributes: ['id', 'name'], 
+        if (dto.appointmentId !== null && dto.appointmentId !== undefined) {
+            appointment = await Appointment.findOne({
+                where: {
+                    id: dto.appointmentId,
                 },
-                {
-                    model: Service, 
-                    attributes: ['id',"name", 'cost'],
-                },
-            ],
-        });
+                include: [
+                    {
+                        model: Patient,
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: Service,
+                        attributes: ['id', "name", 'cost'],
+                    },
+                ],
+            });
+        }
 
         if (!appointment) {
             throw new Error('Cita no encontrada');
         }
 
-        const totalCost:number = appointment.service.reduce((total, service) => total + service.cost, 0);
+        const totalCost: number = appointment.service.reduce((total, service) => total + service.cost, 0);
         const serviceIds: Service[] = appointment.service.map(service => service);
+        try {
+            const customerInvoice: CustomerInvoice = await this.customerInvoiceModel.create({
+                patientName: appointment.patient.name,
+                patientId: appointment.patientId,
+                cost: totalCost,
+                dateAppointment: appointment.appointmentDate,
+                appointmentId: appointment.id,
+                service: serviceIds
+            });
 
-   
-        const customerInvoice:CustomerInvoice = await this.customerInvoiceModel.create({
-            patientName: appointment.patient.name,
-            patientId:appointment.patientId,
-            cost: totalCost,
-            dateAppointment: appointment.appointmentDate,
-            appointmentId: appointment.id,
-            service: serviceIds
-        });
+            return customerInvoice;
+        } catch (error) {
+            throw new Error(error)
+        }
 
-        return customerInvoice;
     }
 }
-    
-    
+
