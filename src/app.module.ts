@@ -12,6 +12,7 @@ import { CustomerInvoiceModule } from './customer-invoice/customer-invoice.modul
 import { ServiceModule } from './service/service.module';
 import { customerInvoiceController } from './customer-invoice/customer-invoice.controller';
 import { CustomerInvoiceService } from './customer-invoice/customer-invoice.service';
+import { SupplierModule } from './supplier/supplier.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { CustomerInvoiceService } from './customer-invoice/customer-invoice.serv
     PatientAppointmentsModule,
     DentalRecordModule,
     ServiceModule,
-    CustomerInvoiceModule
+    CustomerInvoiceModule,
+    SupplierModule
    
   ],
   controllers: [],
