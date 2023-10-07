@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param,Post, Put } from '@nestjs/common';
 import { DentalRecordService } from './dental-record.service';
 import { CreateDentalRecordDto, UpdateDentalRecordDto } from './dto';
-import { DentalRecord } from './dental-record.entity';
 
 @Controller('dental-record')
 export class DentalRecordController {
