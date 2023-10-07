@@ -16,19 +16,19 @@ import { CustomerInvoiceService } from './customer-invoice/customer-invoice.serv
 @Module({
   imports: [
     SequelizeModule.forRoot({
-      dialect: 'mysql',
+      dialect: 'postgres',
       host: 'localhost',
-      port: 3306,
+      port: 5432,
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
       models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice],
     }),
     patientsModule,
-    CustomerInvoiceModule,
     PatientAppointmentsModule,
     DentalRecordModule,
-    ServiceModule
+    ServiceModule,
+    CustomerInvoiceModule
    
   ],
   controllers: [],
