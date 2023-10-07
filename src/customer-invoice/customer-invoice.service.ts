@@ -5,7 +5,6 @@ import { CreateCustomerInvoiceDto} from './dto';
 import { Patient } from 'src/patient/patient.entity';
 import { Service } from 'src/service/service.entity';
 import { Appointment } from 'src/appointment/appointment.entity';
-import { interfaceAppointmentDto } from 'src/appointment/dto';
 
 @Injectable()
 export class CustomerInvoiceService {

@@ -4,7 +4,6 @@ import { CreateAppointmentDto, UpdateAppointmentDto } from './dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Service } from 'src/service/service.entity';
 import Sequelize from 'sequelize';
-import { Op } from 'sequelize';
 
 @Injectable()
 export class AppointmentsService {
