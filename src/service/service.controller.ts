@@ -7,27 +7,27 @@ export class ServiceController {
 
     constructor (private serviveService:ServiceService){}
 
-    @Get()
+    @Get('getAllServices')
     getAllServices(){
         return this.serviveService.getAll()
     }
 
-    @Get(':id')
+    @Get('getOneService/:id')
     getOneService(@Param('id') id:number){
         return this.serviveService.getOne(id)
     }
 
-    @Post()
+    @Post('createService')
     createService(@Body() dto:CreateServiceDto){
         return this.serviveService.create(dto)
     }
 
-    @Put(':id')
+    @Put('updateService/:id')
     updateService(@Param('id') id:number, @Body() dto:UpdateServiceDto){
         return this.serviveService.update(dto, id)
     }
 
-    @Delete(':id')
+    @Delete('deleteService/:id')
     deleteService(@Param('id') id:number){
         return this.serviveService.delete(id)
     }

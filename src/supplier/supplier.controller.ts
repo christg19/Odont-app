@@ -7,27 +7,27 @@ import { CreateSupplierDto, UpdatedSupplierDto } from './dto';
 export class SupplierController {
     constructor(private supplierService:SupplierService){}
 
-    @Get()
+    @Get('getSuppliers')
     getSuppliers(){
         return this.supplierService.getAllSuppliers();
     }
 
-    @Get(':id')
+    @Get('getSupplierById/:id')
     getSupplierById(@Param('id') id:number){
         return this.supplierService.getOneSupplier(id);
     }
 
-    @Post()
+    @Post('createSupplier')
     createSupplier(@Body() newSupplier:CreateSupplierDto){
         return this.supplierService.createSupplier(newSupplier);
     }
 
-    @Put(':id')
+    @Put('updateSupplier/:id')
     updateSupplier(@Param('id') id:number, @Body() updatedSupplier:UpdatedSupplierDto){
         return this.supplierService.updateSupplier(updatedSupplier, id);
     }
 
-    @Delete(':id')
+    @Delete('deleteSupplier/:id')
     deleteSupplier(@Param('id') id:number){
         return this.supplierService.deleteSupplier(id);
     }

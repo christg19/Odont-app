@@ -5,27 +5,27 @@ import { CreateProductDto, UpdatedProductDto } from './dto';
 @Controller('product')
 export class ProductController {
     constructor(private productService: ProductService){}
-    @Get()
+    @Get('getProducts')
     getProducts(){
         return this.productService.getProducts();
     }
 
-    @Get()
+    @Get('getProductById/:id')
     getProductById(@Param('id') id:number){
         return this.productService.getOneProduct(id);
     }
 
-    @Post()
+    @Post('createProduct')
     createProduct(@Body() newProduct:CreateProductDto){
         return this.productService.createProduct(newProduct);
     }
 
-    @Put(':id')
+    @Put('updateProduct/:id')
     updateProduct(@Param('id') id:number, @Body() updatedProduct:UpdatedProductDto){
         return this.productService.updateProduct(updatedProduct, id);
     }
 
-    @Delete(':id')
+    @Delete('deleteProduct/:id')
     deleteProduct(@Param('id') id:number){
         return this.productService.deleteProduct(id);
     }

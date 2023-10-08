@@ -6,17 +6,17 @@ import { CustomerInvoiceService } from './customer-invoice.service';
 export class customerInvoiceController {
     constructor(private customerInvoiceService:CustomerInvoiceService){}
 
-    @Get()
+    @Get('getCustomerInvoices')
     getCustomerInvoices(){
         return this.customerInvoiceService.getCustomerInvoices()
     }
 
-    @Get(':id')
+    @Get('getCustomerInvoiceById/:id')
     getCustomerInvoiceById(@Param('id') id:number ){
         return this.customerInvoiceService.getCustomerInvoiceById(id)
     }
 
-    @Post()
+    @Post('createCustomerInvoice')
     createCustomerInvoice(@Body() dto: CreateCustomerInvoiceDto ){
         return this.customerInvoiceService.createCustomerInvoice(dto)
     }
