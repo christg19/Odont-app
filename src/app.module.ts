@@ -13,6 +13,11 @@ import { ServiceModule } from './service/service.module';
 import { customerInvoiceController } from './customer-invoice/customer-invoice.controller';
 import { CustomerInvoiceService } from './customer-invoice/customer-invoice.service';
 import { SupplierModule } from './supplier/supplier.module';
+import { ProductModule } from './product/product.module';
+import { CategoryProductModule } from './category-product/category-product.module';
+import { CategoryProduct } from './category-product/category-product.entity';
+import { Product } from './product/product.entity';
+import { Supplier } from './supplier/supplier.entity';
 
 @Module({
   imports: [
@@ -23,15 +28,17 @@ import { SupplierModule } from './supplier/supplier.module';
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
-      models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice],
+      models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product ],
+      logging: console.log
     }),
     patientsModule,
     PatientAppointmentsModule,
     DentalRecordModule,
     ServiceModule,
     CustomerInvoiceModule,
-    SupplierModule
-   
+    CategoryProductModule,
+    SupplierModule,
+    ProductModule
   ],
   controllers: [],
   providers: [],
@@ -42,4 +49,5 @@ export class AppModule {}
 
 
 // docker run --name odontdb -e MYSQL_ROOT_PASSWORD=testDatabase -e MYSQL_DATABASE=odontdb -p 3306:3306 -d mysql:latest
+// docker run --name odontdb -e POSTGRES_USER=host -e POSTGRES_PASSWORD=testDatabase -e POSTGRES_DB=odontdb -p 5432:5432 -d postgres:latest
 

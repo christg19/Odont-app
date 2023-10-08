@@ -17,15 +17,15 @@ export class CustomerInvoiceService {
     }
 
     async getCustomerInvoiceById(id: number): Promise<CustomerInvoice> {
-        if (id !== null && id !== undefined) {
+        if(id <= 0){
+            throw new Error ('El ID no es válido')
+        };
             return this.customerInvoiceModel.findOne({
                 where: {
                     id: id
                 }
             });
-        } else {
-            throw new NotFoundException
-        }
+
 
     }
 
@@ -68,7 +68,7 @@ export class CustomerInvoiceService {
 
             return customerInvoice;
         } catch (error) {
-            throw new Error(error)
+            throw new Error(error);
         }
 
     }
