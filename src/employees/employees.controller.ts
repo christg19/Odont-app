@@ -11,7 +11,7 @@ export class EmployeesController {
         return this.employeeService.getEmployees()
     }
 
-    @Get('getEmployeeById/:id')
+    @Get('getEmployeeById/:id') 
     getEmployeeById(@Param('id') id:number){
         return this.employeeService.getOneEmployee(id)
     }
