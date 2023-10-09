@@ -4,18 +4,18 @@ export class CreatePatientDto {
 
     @IsString()
     @IsNotEmpty()
-    name:string
+    readonly name:string
     @IsNumber()
     @IsNotEmpty()
-    age:number
+    readonly age:number
     @IsString()
     @IsOptional()
-    address:string
+    readonly address:string
     @IsString()
     @IsOptional()
-    tel:string
+    readonly tel:string
     @IsString()
     @IsOptional()
-    email?:string
+    readonly email?:string
 
 }

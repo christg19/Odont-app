@@ -7,22 +7,22 @@ export class PatientAppointmentsController {
 
     constructor(private appointmentService: AppointmentsService) { }
 
-    @Get()
+    @Get('getAllAppointments')
     getAllAppointments() {
         return this.appointmentService.getAppointments()
     }
 
-    @Post()
+    @Post('createAppointment')
     createAppointment(@Body() dto: CreateAppointmentDto) {
         return this.appointmentService.createAppointment(dto)
     }
     
-    @Put(':id')
+    @Put('updateAppointment/:id')
     updateAppointment(@Param('id') id:number, @Body() dto: UpdateAppointmentDto){
         return this.appointmentService.updateAppointment(dto, id)
     }
 
-    @Delete(':id')
+    @Delete('deleteAppointment/:id')
     DeleteAppointment(@Param('id') id:number) {
         return this.appointmentService.deleteAppointment(id)
     }

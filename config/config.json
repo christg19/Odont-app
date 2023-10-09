@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": "testDatabase",
+    "database": "odontdb",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

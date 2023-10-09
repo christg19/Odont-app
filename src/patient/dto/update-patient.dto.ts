@@ -5,17 +5,17 @@ export class UpdatePatientDto {
 
     @IsString()
     @IsOptional()
-    name:string
+    readonly name?:string
     @IsNumber()
     @IsOptional()
-    age:number
+    readonly age?:number
     @IsString()
     @IsOptional()
-    address:string
+    readonly address?:string
     @IsString()
     @IsOptional()
-    tel:string
+    readonly tel?:string
     @IsString()
     @IsOptional()
-    email?:string
+    readonly email?:string
 }
