@@ -29,11 +29,17 @@ export class AppointmentsService {
       if(id <= 0){
         throw new Error("El ID no es valido");
       };
-            return this.appointmentModel.findOne({
+            const appointment = await this.appointmentModel.findOne({
                 where: {
                     id: id
                 }
             });
+
+            if(!appointment){
+                throw new NotFoundException('Cita no encontrada');
+            }
+
+            return appointment;
     }
 
     async createAppointment(dto: CreateAppointmentDto) {
