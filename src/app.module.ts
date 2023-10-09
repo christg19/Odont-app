@@ -18,6 +18,8 @@ import { CategoryProductModule } from './category-product/category-product.modul
 import { CategoryProduct } from './category-product/category-product.entity';
 import { Product } from './product/product.entity';
 import { Supplier } from './supplier/supplier.entity';
+import { EmployeesModule } from './employees/employees.module';
+import { Employee } from './employees/employee.entity';
 
 @Module({
   imports: [
@@ -28,7 +30,7 @@ import { Supplier } from './supplier/supplier.entity';
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
-      models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product ],
+      models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee ],
       logging: console.log
     }),
     patientsModule,
@@ -38,7 +40,8 @@ import { Supplier } from './supplier/supplier.entity';
     CustomerInvoiceModule,
     CategoryProductModule,
     SupplierModule,
-    ProductModule
+    ProductModule,
+    EmployeesModule
   ],
   controllers: [],
   providers: [],
