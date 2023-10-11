@@ -10,6 +10,7 @@ import { CustomerInvoice } from './customer-invoice/customer-invoice.entity';
 import { CategoryProduct } from './category-product/category-product.entity';
 import { Supplier } from './supplier/supplier.entity';
 import { Product } from './product/product.entity';
+import { User } from './users/user.entity';
 
 async function bootstrap() {
   const sequelize = new Sequelize({
@@ -19,13 +20,20 @@ async function bootstrap() {
     username: 'root',
     password: 'testDatabase',
     database: 'odontdb',
-    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product],
+    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User],
+    sync: {
+      force: true // Esto sincronizará todos los modelos y eliminará las tablas existentes
+  }
   });
 
   await sequelize.sync(); // Llamada a sequelize.sync() dentro de la función bootstrap()
 
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+  }));
   await app.listen(3000);
 }
 
