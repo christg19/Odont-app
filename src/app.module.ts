@@ -10,8 +10,6 @@ import { PatientAppointmentsModule } from './appointment/appointment.module';
 import { DentalRecordModule } from './dental-record/dental-record.module';
 import { CustomerInvoiceModule } from './customer-invoice/customer-invoice.module';
 import { ServiceModule } from './service/service.module';
-import { customerInvoiceController } from './customer-invoice/customer-invoice.controller';
-import { CustomerInvoiceService } from './customer-invoice/customer-invoice.service';
 import { SupplierModule } from './supplier/supplier.module';
 import { ProductModule } from './product/product.module';
 import { CategoryProductModule } from './category-product/category-product.module';
@@ -23,6 +21,8 @@ import { Employee } from './employees/employee.entity';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -49,7 +49,12 @@ import { User } from './users/user.entity';
     EmployeesModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
   exports: [patientsModule], 
 })
 

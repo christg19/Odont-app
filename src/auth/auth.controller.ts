@@ -2,17 +2,21 @@ import { Get, Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards }
 import { AuthService } from './auth.service';
 import { RegisterDto, LoginDto } from "./dto";
 import { AuthGuard } from "./auth.guard";
+import { User } from "src/users/user.entity";
+import { RolesGuard } from "src/guards/roles.guard";
+import { Roles } from "src/decorators/role.decorator";
+import { Role } from "src/enum/role.enum";
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @Get('profile')
     @UseGuards(AuthGuard)
-    profile(@Request() req) {
-        return req.user;
+    @Get('profile')
+    getProfile(@Request() request) {
+        const user: User = request.user;
+        return user;
     }
-
 
     @Post('register')
     register(@Body() user: RegisterDto) {

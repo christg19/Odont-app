@@ -7,6 +7,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersService {
     constructor(@InjectModel(User) private userModel: typeof User){}
 
+    async findAllUsers(){
+        return this.userModel.findAll();
+    }
+
     async createUser(dto:CreateUserDto){
         return this.userModel.create(dto)
     }
@@ -17,6 +21,18 @@ export class UsersService {
                 email:email
             }
         })
+    }
+
+    async getUserById(email:string): Promise<User>{
+
+        const user = await this.userModel.findOne({
+            where:{
+                email:email
+            }
+        });
+
+        return user;
+
     }
 
 }

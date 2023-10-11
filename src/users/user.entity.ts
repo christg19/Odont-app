@@ -1,4 +1,5 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Role } from 'src/enum/role.enum';
 
 @Table
 export class User extends Model<User> {
@@ -11,6 +12,6 @@ export class User extends Model<User> {
   @Column
   password: string;
 
-  @Column
-  role: string;
+  @Column(DataType.ARRAY(DataType.JSONB))
+  roles: Role[];
 }

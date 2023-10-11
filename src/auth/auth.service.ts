@@ -4,6 +4,7 @@ import { RegisterDto } from './dto';
 import * as bcryptjs from 'bcrypt'
 import { LoginDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from 'src/enum/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,8 @@ export class AuthService {
         await this.usersService.createUser({
             name,
             email,
-            password: await bcryptjs.hash(password, 10)
+            password: await bcryptjs.hash(password, 10),
+            roles: [Role.Admin]
         });
 
         return 'Usuario creado correctamente'
@@ -38,7 +40,7 @@ export class AuthService {
             throw new UnauthorizedException('Contraseña incorrecta');
         }
 
-        const payload = {email: user.email};
+        const payload = {id: user.id, email: user.email, roles: user.roles};
         const token = await this.jwtService.signAsync(payload);
 
         return {
@@ -46,6 +48,7 @@ export class AuthService {
             email: user.email,
         };
     }
+
 
 
 }

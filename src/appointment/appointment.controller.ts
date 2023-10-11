@@ -1,8 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { AppointmentsService } from './appointment.service';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './dto';
+import { SetMetadata } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+
+export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
+
 
 @Controller('patient-appointments')
+@UseGuards(AuthGuard)
 export class PatientAppointmentsController {
 
     constructor(private appointmentService: AppointmentsService) { }

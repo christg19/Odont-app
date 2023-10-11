@@ -1,9 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { jwtConstants } from "./constants/jwt.constant";
@@ -24,12 +19,17 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-      request.user = payload;
+
+      // Verificar si el usuario tiene el rol de administrador
+      if (payload.roles && payload.roles.includes('admin')) {
+        request.user = payload;
+        return true; // Permitir el acceso si el usuario es administrador
+      } else {
+        throw new UnauthorizedException(); // No es administrador, negar el acceso
+      }
     } catch (error) {
       throw new UnauthorizedException();
     }
-
-    return true;
   }
 
   private extractTokenFromHeader(request: Request) {
