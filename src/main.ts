@@ -21,12 +21,12 @@ async function bootstrap() {
     password: 'testDatabase',
     database: 'odontdb',
     models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User],
-    sync: {
-      force: true // Esto sincronizará todos los modelos y eliminará las tablas existentes
-  }
+  //   sync: {
+  //     force: true
+  // }
   });
 
-  await sequelize.sync(); // Llamada a sequelize.sync() dentro de la función bootstrap()
+  await sequelize.sync(); 
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({
@@ -37,7 +37,7 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-bootstrap(); // Llamada a la función bootstrap()
+bootstrap(); 
 
 
 

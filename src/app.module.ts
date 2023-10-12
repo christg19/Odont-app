@@ -23,6 +23,8 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
+import { ReminderModule } from './reminder/reminder.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -47,6 +49,8 @@ import { RolesGuard } from './guards/roles.guard';
     SupplierModule,
     ProductModule,
     EmployeesModule,
+    ReminderModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [

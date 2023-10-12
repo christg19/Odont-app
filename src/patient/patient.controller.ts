@@ -1,15 +1,12 @@
 import { Body, Controller, Get,Post, Put, Delete, Param } from '@nestjs/common';
 import { CreatePatientDto, UpdatePatientDto} from './dto';
 import { ClientsService } from './patient.service';
-import { Roles } from 'src/decorators/role.decorator';
-import { Role } from 'src/enum/role.enum';
 
 @Controller('clients')
 export class ClientsController {
     constructor(private clientService: ClientsService){}
 
     @Get('getPatients')
-    @Roles(Role.Admin)
     getPatients(){
         return this.clientService.getAllPatients()
     }

@@ -12,7 +12,7 @@ export class UsersService {
     }
 
     async createUser(dto:CreateUserDto){
-        return this.userModel.create(dto)
+        return this.userModel.create(dto);
     }
 
     async findUser(email:string){
