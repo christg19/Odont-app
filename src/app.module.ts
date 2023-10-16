@@ -49,8 +49,8 @@ import { NotificationModule } from './notification/notification.module';
     SupplierModule,
     ProductModule,
     EmployeesModule,
-    ReminderModule,
     NotificationModule,
+    ReminderModule,
   ],
   controllers: [],
   providers: [

@@ -11,6 +11,7 @@ import { CategoryProduct } from './category-product/category-product.entity';
 import { Supplier } from './supplier/supplier.entity';
 import { Product } from './product/product.entity';
 import { User } from './users/user.entity';
+import { Notification } from './notification/notifiacion.entity';
 
 async function bootstrap() {
   const sequelize = new Sequelize({
@@ -20,10 +21,10 @@ async function bootstrap() {
     username: 'root',
     password: 'testDatabase',
     database: 'odontdb',
-    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User],
-  //   sync: {
-  //     force: true
-  // }
+    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User, Notification],
+    sync: {
+      force: true
+  }
   });
 
   await sequelize.sync(); 

@@ -11,4 +11,7 @@ export class Notification extends Model<Notification> {
 
     @Column
     read: boolean;
+
+    @Column
+    pendingDate:Date;
 }

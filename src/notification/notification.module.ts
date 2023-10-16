@@ -7,6 +7,7 @@ import { Notification } from './notifiacion.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Notification])],
   controllers: [NotificationController],
-  providers: [NotificationService]
+  providers: [NotificationService],
+  exports: [NotificationService]
 })
 export class NotificationModule {}

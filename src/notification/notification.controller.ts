@@ -16,6 +16,7 @@ export class NotificationController {
         return this.notificationService.getNotification(id)
     }
 
+
     @Post('notification')
     createNotification(@Body() newNotification: CreateNotificationDto) {
         return this.notificationService.createNotification(newNotification)
