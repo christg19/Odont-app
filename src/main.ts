@@ -11,6 +11,7 @@ import { CategoryProduct } from './category-product/category-product.entity';
 import { Supplier } from './supplier/supplier.entity';
 import { Product } from './product/product.entity';
 import { User } from './users/user.entity';
+import { Notification } from './notification/notifiacion.entity';
 
 async function bootstrap() {
   const sequelize = new Sequelize({
@@ -20,13 +21,13 @@ async function bootstrap() {
     username: 'root',
     password: 'testDatabase',
     database: 'odontdb',
-    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User],
+    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User, Notification],
     sync: {
-      force: true // Esto sincronizará todos los modelos y eliminará las tablas existentes
+      force: true
   }
   });
 
-  await sequelize.sync(); // Llamada a sequelize.sync() dentro de la función bootstrap()
+  await sequelize.sync(); 
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({
@@ -37,7 +38,7 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-bootstrap(); // Llamada a la función bootstrap()
+bootstrap(); 
 
 
 

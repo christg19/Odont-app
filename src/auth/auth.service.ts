@@ -18,14 +18,14 @@ export class AuthService {
             throw new BadRequestException('Email existente');
         }
 
-        await this.usersService.createUser({
+        const newUser: RegisterDto = ({
             name,
             email,
             password: await bcryptjs.hash(password, 10),
             roles: [Role.Admin]
         });
 
-        return 'Usuario creado correctamente'
+        return this.usersService.createUser(newUser);
     }
 
     async login({email, password}:LoginDto){
