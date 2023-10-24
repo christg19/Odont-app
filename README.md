@@ -20,4 +20,5 @@ API to Dental APP
 - :bar_chart: **Reports and Statistics:** Generate reports and statistics on the status of debts, payments made, and companies with the highest debt.
 
 
-
+## API DOCUMENTATION
+localhost:3000/docs
