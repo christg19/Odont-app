@@ -3,11 +3,14 @@ import { AppointmentsService } from './appointment.service';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './dto';
 import { SetMetadata } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
 
 @Controller('patient-appointments')
+@ApiTags('appointment')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class PatientAppointmentsController {
 

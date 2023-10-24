@@ -12,6 +12,7 @@ import { Supplier } from './supplier/supplier.entity';
 import { Product } from './product/product.entity';
 import { User } from './users/user.entity';
 import { Notification } from './notification/notifiacion.entity';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const sequelize = new Sequelize({
@@ -24,12 +25,25 @@ async function bootstrap() {
     models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User, Notification],
     sync: {
       force: true
-  }
+    }
   });
 
-  await sequelize.sync(); 
+  await sequelize.sync();
 
   const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api/v1');
+  app.enableCors();
+
+  const config = new DocumentBuilder()
+    .setTitle('Odont App Documentation')
+    .setDescription('The Odont App Documentation')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
@@ -38,7 +52,7 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-bootstrap(); 
+bootstrap();
 
 
 

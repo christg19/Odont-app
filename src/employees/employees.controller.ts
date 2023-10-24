@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto, UpdatedEmployeeDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('employees')
+@ApiTags('employees')
 export class EmployeesController {
     constructor(private employeeService:EmployeesService){}
     

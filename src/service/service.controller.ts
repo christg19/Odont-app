@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { ServiceService } from './service.service';
 import { CreateServiceDto, UpdateServiceDto} from './dto'
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('service')
+@ApiTags('service')
 export class ServiceController {
 
     constructor (private serviveService:ServiceService){}
