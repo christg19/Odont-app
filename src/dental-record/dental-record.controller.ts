@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param,Post, Put } from '@nestjs/common';
 import { DentalRecordService } from './dental-record.service';
 import { CreateDentalRecordDto, UpdateDentalRecordDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('dental-record')
+@ApiTags('dental-record')
 export class DentalRecordController {
 
     constructor(private dentalRecordService:DentalRecordService){}

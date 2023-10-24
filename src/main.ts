@@ -32,12 +32,14 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api/v1')
+  app.setGlobalPrefix('api/v1');
+  app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle('Odont App Documentation')
     .setDescription('The Odont App Documentation')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
