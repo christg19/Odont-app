@@ -8,8 +8,17 @@ export class DentalRecordService {
 
     constructor(@InjectModel(DentalRecord) private dentalRecordModel: typeof DentalRecord) { }
 
-    async getAllDentalRecords(): Promise<DentalRecord[]> {
-        return this.dentalRecordModel.findAll();
+    async getAllDentalRecords(page: number, limit: number): Promise<{ items: DentalRecord[], total: number }> {
+        const offset = (page - 1) * limit;
+        const dentalRecord = await this.dentalRecordModel.findAndCountAll({
+            limit: limit,
+            offset: offset
+        });
+
+        return {
+            items: dentalRecord.rows,
+            total: dentalRecord.count,
+        };
     }
 
     async getOneDentalRecord(id: number): Promise<DentalRecord> {

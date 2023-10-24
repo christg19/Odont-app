@@ -5,9 +5,9 @@ import { CreateProductDto, UpdatedProductDto } from './dto';
 @Controller('product')
 export class ProductController {
     constructor(private productService: ProductService){}
-    @Get('getProducts')
-    getProducts(){
-        return this.productService.getProducts();
+    @Get('getProducts/:page/:limit')
+    getProducts(@Param('page') page:number, @Param('limit') limit:number){
+        return this.productService.getProducts(page, limit);
     }
 
     @Get('getProductById/:id')

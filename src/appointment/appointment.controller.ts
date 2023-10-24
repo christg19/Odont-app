@@ -13,9 +13,9 @@ export class PatientAppointmentsController {
 
     constructor(private appointmentService: AppointmentsService) { }
 
-    @Get('getAllAppointments')
-    getAllAppointments() {
-        return this.appointmentService.getAppointments()
+    @Get('getAllAppointments/:page/:limit')
+    getAllAppointments(@Param('page') page:number, @Param('limit') limit:number) {
+        return this.appointmentService.getAppointments(page, limit)
     }
 
     @Post('createAppointment')

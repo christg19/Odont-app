@@ -6,9 +6,9 @@ import { NotificationService } from './notification.service';
 export class NotificationController {
     constructor(private notificationService: NotificationService) { }
 
-    @Get('notifications')
-    getNotifications() {
-        return this.notificationService.getNotifications()
+    @Get('notifications/:page/:limit')
+    getNotifications(@Param('page') page:number, @Param('limit') limit:number) {
+        return this.notificationService.getNotifications(page, limit)
     }
 
     @Get('notification/:id')

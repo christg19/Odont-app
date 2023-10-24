@@ -7,8 +7,17 @@ import { CreateCategoryDto, UpdatedCategoryDto } from './dto';
 export class CategoryProductService {
     constructor(@InjectModel(CategoryProduct) private categoryProductModel: typeof CategoryProduct) { }
 
-    async getCategories(): Promise<CategoryProduct[]> {
-        return this.categoryProductModel.findAll();
+    async getCategories(page: number, limit: number): Promise<{ items: CategoryProduct[], total: number }> {
+        const offset = (page - 1) * limit;
+        const categoryProduct = await this.categoryProductModel.findAndCountAll({
+            limit: limit,
+            offset: offset
+        });
+
+        return {
+            items: categoryProduct.rows,
+            total: categoryProduct.count
+        };
     }
 
     async getCategory(id: number): Promise<CategoryProduct> {
@@ -24,7 +33,7 @@ export class CategoryProductService {
 
         if (!category) {
             throw new NotFoundException('Categoria no encontrada');
-        } 
+        }
 
         return category;
 
@@ -39,18 +48,18 @@ export class CategoryProductService {
         }
     }
 
-    async updateCategory(id:number, dto:UpdatedCategoryDto){
-        if(id <= 0){
+    async updateCategory(id: number, dto: UpdatedCategoryDto) {
+        if (id <= 0) {
             throw new Error('El ID no es válido');
         }
 
-        const category:CategoryProduct = await this.categoryProductModel.findOne({
-            where:{
-                id:id
+        const category: CategoryProduct = await this.categoryProductModel.findOne({
+            where: {
+                id: id
             }
         });
 
-        if(!category){
+        if (!category) {
             throw new Error('Categoria no encontrada');
         }
 
@@ -58,18 +67,18 @@ export class CategoryProductService {
         return 'La categoria ha sido actualizada correctamente';
     }
 
-    async deleteCategory(id:number){
-        if(id <= 0){
+    async deleteCategory(id: number) {
+        if (id <= 0) {
             throw new Error('El ID no es válido');
         }
 
-        const category:CategoryProduct = await this.categoryProductModel.findOne({
-            where:{
-                id:id
+        const category: CategoryProduct = await this.categoryProductModel.findOne({
+            where: {
+                id: id
             }
         });
-        
-        if(!category){
+
+        if (!category) {
             throw new Error('Categoria no encontrada');
         }
 

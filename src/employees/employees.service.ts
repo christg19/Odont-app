@@ -9,8 +9,17 @@ export class EmployeesService {
 
     constructor(@InjectModel(Employee) private employeeModel: typeof Employee) { }
 
-    async getEmployees(): Promise<Employee[]> {
-        return this.employeeModel.findAll();
+    async getEmployees(page:number, limit:number): Promise<{items: Employee[], total: number}> {
+        const offset = (page - 1) * limit;
+        const employee = await this.employeeModel.findAndCountAll({
+            limit:limit,
+            offset:offset
+        });
+
+        return {
+            items: employee.rows,
+            total: employee.count,
+        }
     }
 
     async getOneEmployee(id: number): Promise<Employee> {

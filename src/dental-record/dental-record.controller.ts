@@ -7,9 +7,9 @@ export class DentalRecordController {
 
     constructor(private dentalRecordService:DentalRecordService){}
 
-    @Get('getAllDentalRecords')
-    getAllDentalRecords(){
-        return this.dentalRecordService.getAllDentalRecords()
+    @Get('getAllDentalRecords/:page/:limit')
+    getAllDentalRecords(@Param('page') page:number, @Param('limit') limit:number){
+        return this.dentalRecordService.getAllDentalRecords(page, limit)
     }
 
     @Get('getOneDentalRecord/:id')

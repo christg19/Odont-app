@@ -23,9 +23,18 @@ export class NotificationService {
     }
 
 
-    async getNotifications(): Promise<Notification[]> {
+    async getNotifications(page:number, limit:number): Promise<{items: Notification[], total:number}> {
+        const offset = (page-1)*limit;
         try {
-            return this.notificationModel.findAll();
+            const notification = await this.notificationModel.findAndCountAll({
+                limit:limit,
+                offset:offset
+            });
+
+            return {
+                items: notification.rows,
+                total: notification.count
+            };
         } catch (error) {
             throw new Error(error);
         }

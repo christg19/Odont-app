@@ -8,12 +8,20 @@ import { Appointment } from 'src/appointment/appointment.entity';
 
 @Injectable()
 export class CustomerInvoiceService {
-    constructor(@InjectModel(CustomerInvoice) private customerInvoiceModel: typeof CustomerInvoice,
-        @InjectModel(Patient) private patientModel: typeof Patient,
-        @InjectModel(Appointment) private appointmentModel: typeof Appointment) { }
+    constructor(@InjectModel(CustomerInvoice) private customerInvoiceModel: typeof CustomerInvoice) { }
 
-    async getCustomerInvoices(): Promise<CustomerInvoice[]> {
-        return this.customerInvoiceModel.findAll();
+    async getCustomerInvoices(page:number, limit: number): Promise<{ items: CustomerInvoice[]; total: number }> {
+        const offset = (page - 1) * limit;
+
+        const customerInvoice = await this.customerInvoiceModel.findAndCountAll({
+            limit: limit,
+            offset:offset
+        });
+
+        return {
+            items: customerInvoice.rows,
+            total: customerInvoice.count,
+        };
     }
 
     async getCustomerInvoiceById(id: number): Promise<CustomerInvoice> {

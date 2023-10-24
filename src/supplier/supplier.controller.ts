@@ -7,9 +7,9 @@ import { CreateSupplierDto, UpdatedSupplierDto } from './dto';
 export class SupplierController {
     constructor(private supplierService:SupplierService){}
 
-    @Get('getSuppliers')
-    getSuppliers(){
-        return this.supplierService.getAllSuppliers();
+    @Get('getSuppliers/:page/:limit')
+    getSuppliers(@Param('page') page:number, @Param('limit') limit:number){
+        return this.supplierService.getAllSuppliers(page, limit);
     }
 
     @Get('getSupplierById/:id')
