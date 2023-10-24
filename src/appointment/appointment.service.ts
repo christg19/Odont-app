@@ -9,21 +9,29 @@ import { NotFoundException, BadRequestException } from '@nestjs/common';
 @Injectable()
 export class AppointmentsService {
 
-    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment,
-        @InjectModel(Service) private serviceModel: typeof Service) { }
+    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment) { }
 
-    async getAppointments(): Promise<Appointment[]> {
-        const appointmentWithService = await Appointment.findAll({
+    async getAppointments(page: number, limit: number): Promise<{ items: Appointment[]; total: number }> {
+        const offset = (page - 1) * limit;
+        
+        const appointmentsWithService = await Appointment.findAndCountAll({
             include: [
                 {
                     model: Service,
                     as: 'service',
                     attributes: ['id', 'name', 'cost']
                 }
-            ]
+            ],
+            limit: limit,
+            offset: offset,
         });
-        return appointmentWithService;
+    
+        return {
+            items: appointmentsWithService.rows,
+            total: appointmentsWithService.count,
+        };
     }
+    
 
     async getAppointmentById(id: number): Promise<Appointment> {
       if(id <= 0){

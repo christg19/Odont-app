@@ -6,9 +6,9 @@ import { CreateCategoryDto, UpdatedCategoryDto } from './dto';
 export class CategoryProductController {
     constructor(private categoryProductService: CategoryProductService) { }
 
-    @Get('getAllCategories')
-    getAllCategories() {
-        return this.categoryProductService.getCategories()
+    @Get('getAllCategories/:page/:limit')
+    getAllCategories(@Param('page') page:number, @Param('limit') limit:number) {
+        return this.categoryProductService.getCategories(page, limit)
     }
 
     @Get('getCategory/:id')

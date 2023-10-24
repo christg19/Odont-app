@@ -6,9 +6,9 @@ import { CreateEmployeeDto, UpdatedEmployeeDto } from './dto';
 export class EmployeesController {
     constructor(private employeeService:EmployeesService){}
     
-    @Get('getAllEmployees')
-    getAllEmployees(){
-        return this.employeeService.getEmployees()
+    @Get('getAllEmployees/:page/:limit')
+    getAllEmployees(@Param('page') page:number, @Param('limit') limit:number){
+        return this.employeeService.getEmployees(page, limit)
     }
 
     @Get('getEmployeeById/:id') 

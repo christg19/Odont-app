@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -6,9 +6,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersController {
     constructor(private userService:UsersService){}
 
-    @Get('getUsers')
-    getUsers(){
-        return this.userService.findAllUsers()
+    @Get('getUsers/:page/:limit')
+    getUsers(@Param('page') page:number, @Param('limit') limit:number){
+        return this.userService.findAllUsers(page, limit)
     }
 
     @Post('createUser')

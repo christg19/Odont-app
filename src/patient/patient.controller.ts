@@ -6,9 +6,9 @@ import { ClientsService } from './patient.service';
 export class ClientsController {
     constructor(private clientService: ClientsService){}
 
-    @Get('getPatients')
-    getPatients(){
-        return this.clientService.getAllPatients()
+    @Get('getPatients/:page/:limit')
+    async getPatients(@Param('page') page: number, @Param('limit') limit: number) {
+      return this.clientService.getAllPatients(page, limit); 
     }
 
     @Get('getPatientById/:id')

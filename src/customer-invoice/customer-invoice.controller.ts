@@ -7,8 +7,8 @@ export class customerInvoiceController {
     constructor(private customerInvoiceService:CustomerInvoiceService){}
 
     @Get('getCustomerInvoices')
-    getCustomerInvoices(){
-        return this.customerInvoiceService.getCustomerInvoices()
+    getCustomerInvoices(@Param('page') page:number, @Param('limit') limit:number){
+        return this.customerInvoiceService.getCustomerInvoices(page, limit)
     }
 
     @Get('getCustomerInvoiceById/:id')

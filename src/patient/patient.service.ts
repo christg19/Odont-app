@@ -11,8 +11,17 @@ export class ClientsService {
         private patientModel: typeof Patient
     ) { }
 
-    async getAllPatients(): Promise<Patient[]> {
-        return this.patientModel.findAll();
+    async getAllPatients(page: number, limit: number): Promise<{ items: Patient[]; total: number }> {
+        const offset = (page - 1) * limit;
+        const patients = await this.patientModel.findAndCountAll({
+            limit: limit,
+            offset: offset,
+        });
+
+        return {
+            items: patients.rows,
+            total: patients.count,
+        };
     }
 
     async getOnePatient(id: number): Promise<Patient> {
@@ -73,7 +82,7 @@ export class ClientsService {
             }
         });
 
-        if(!patient){
+        if (!patient) {
             throw new NotFoundException('Paciente no encontrado');
         }
 

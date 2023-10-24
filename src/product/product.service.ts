@@ -9,8 +9,17 @@ export class ProductService {
     constructor(@InjectModel(Product) private productModel: typeof Product,
     @InjectModel(CategoryProduct) private categoryProductModel: typeof CategoryProduct){}
 
-    async getProducts(): Promise<Product[]>{
-        return this.productModel.findAll();
+    async getProducts(page:number, limit:number): Promise<{items: Product[], total:number}>{
+        const offset = (page-1)*limit;
+        const product = await this.productModel.findAndCountAll({
+            limit:limit,
+            offset:offset
+        });
+
+        return {
+            items: product.rows,
+            total: product.count,
+        }
     }
 
     async getOneProduct(id:number): Promise<Product>{
