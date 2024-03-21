@@ -21,4 +21,5 @@ API to Dental APP
 
 
 ## API DOCUMENTATION
-localhost:3000/docs
+localhost:3000/docs <br/>
+<img src="odontapp.png" alt="Descripción breve de la imagen">
