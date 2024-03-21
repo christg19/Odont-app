@@ -13,52 +13,32 @@ export class ServiceService {
     }
 
     async getOne(id: number): Promise<Service> {
-      if(id <= 0){
-        throw new Error('El ID no es válido');
-      };
-            return this.serviceModel.findOne({
-                where: {
-                    id: id
-                }
-            });
-        
-    }
-
-    async create(dto: CreateServiceDto) {
-        try {
-            return this.serviceModel.create(dto);
-        } catch (error) {
-            throw new Error(error);
+        const service = await this.serviceModel.findOne({ where: { id } });
+        if (!service) {
+            throw new NotFoundException('Servicio no encontrado');
         }
+        return service;
     }
 
-    async update(dto: UpdateServiceDto, id: number) {
-        if (id <= 0) {
-            throw new Error('El ID no es válido')
-        };
+    async create(dto: CreateServiceDto): Promise<Service> {
+        return this.serviceModel.create(dto);
+    }
 
-        const service = await this.serviceModel.findOne({
-            where: {
-                id: id
-            }
-        });
-
+    async update(dto: UpdateServiceDto, id: number): Promise<string> {
+        const service = await this.serviceModel.findByPk(id);
+        if (!service) {
+            throw new NotFoundException('Servicio no encontrado');
+        }
         await service.update(dto);
         return 'Servicio actualizado correctamente';
     }
 
-    async delete(id: number) {
-        if (id <= 0) {
-            throw new Error('El ID no es válido');
-        };
-
-        const service = await this.serviceModel.findOne({
-            where: {
-                id: id
-            }
-        });
-
+    async delete(id: number): Promise<string> {
+        const service = await this.serviceModel.findByPk(id);
+        if (!service) {
+            throw new NotFoundException('Servicio no encontrado');
+        }
         await service.destroy();
-        return 'El servicio fue eliminado correctamente'
+        return 'El servicio fue eliminado correctamente';
     }
 }

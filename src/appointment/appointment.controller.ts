@@ -11,16 +11,21 @@ export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 @Controller('patient-appointments')
 @ApiTags('appointment')
 @ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class PatientAppointmentsController {
 
     constructor(private appointmentService: AppointmentsService) { }
 
     @Get('getAllAppointments/:page/:limit')
     getAllAppointments(@Param('page') page:number, @Param('limit') limit:number) {
-        return this.appointmentService.getAppointments(page, limit)
+        return this.appointmentService.getAppointments(page, limit);
     }
 
+    @Get('getAppointmentById/:id')
+    getAppointmentById(@Param('id') id:number){
+        return this.appointmentService.getAppointmentById(id);
+    }
+    
     @Post('createAppointment')
     createAppointment(@Body() dto: CreateAppointmentDto) {
         return this.appointmentService.createAppointment(dto)

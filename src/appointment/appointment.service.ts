@@ -5,32 +5,33 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Service } from 'src/service/service.entity';
 import Sequelize from 'sequelize';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { Patient } from 'src/patient/patient.entity';
 
 @Injectable()
 export class AppointmentsService {
 
-    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment) { }
+    constructor(@InjectModel(Appointment) private appointmentModel: typeof Appointment,
+    @InjectModel(Patient) private patientModel: typeof Patient) { }
 
-    async getAppointments(page: number, limit: number): Promise<{ items: Appointment[]; total: number }> {
+    async getAppointments(page: number, limit: number): Promise<Appointment[]> {
         const offset = (page - 1) * limit;
         
-        const appointmentsWithService = await Appointment.findAndCountAll({
-            include: [
-                {
-                    model: Service,
-                    as: 'service',
-                    attributes: ['id', 'name', 'cost']
-                }
-            ],
-            limit: limit,
-            offset: offset,
+        const appointmentsWithService = await this.appointmentModel.findAndCountAll({
+          include: [
+            {
+              model: Service,
+              as: 'service',
+              attributes: ['id', 'name', 'cost']
+            },
+           
+          ],
+          limit: limit,
+          offset: offset,
         });
+      
+        return appointmentsWithService.rows;
+      }
     
-        return {
-            items: appointmentsWithService.rows,
-            total: appointmentsWithService.count,
-        };
-    }
     
 
     async getAppointmentById(id: number): Promise<Appointment> {
@@ -52,6 +53,7 @@ export class AppointmentsService {
 
     async createAppointment(dto: CreateAppointmentDto) {
         let services: Service[] = null;
+        let servicesName: string[] = [];
 
         if (dto.serviceIds !== null && dto.serviceIds !== undefined) {
             services = await Service.findAll({
@@ -63,11 +65,25 @@ export class AppointmentsService {
             });
         }
 
+        services.forEach((service)=>{
+            servicesName.push(service.name)
+        })
+         
+        
+        const patient = await this.patientModel.findOne({
+            where:{
+                id:dto.patientId
+            }
+        })
+
         if (services.length === dto.serviceIds.length) {
             const appointmentData = {
                 appointmentDate: dto.appointmentDate,
+                patientName: patient.name,
                 notes: dto.notes,
-                patientId: dto.patientId
+                servicesName: servicesName,
+                totalCost: services.reduce((acc, value) => acc + value.cost, 0),
+                patientId: dto.patientId,
             };
 
             const appointment = await this.appointmentModel.create(appointmentData);

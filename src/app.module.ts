@@ -36,7 +36,8 @@ import { NotificationModule } from './notification/notification.module';
       password: 'testDatabase',
       database: 'odontdb',
       models: [User, Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee],
-      logging: console.log
+      logging: console.log,
+      
     }),
     UsersModule,
     AuthModule,

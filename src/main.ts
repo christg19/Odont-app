@@ -15,23 +15,10 @@ import { Notification } from './notification/notifiacion.entity';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const sequelize = new Sequelize({
-    dialect: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'root',
-    password: 'testDatabase',
-    database: 'odontdb',
-    models: [Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, User, Notification],
-    sync: {
-      force: true
-    }
-  });
-
-  await sequelize.sync();
 
   const app = await NestFactory.create(AppModule);
-
+  const sequelize = app.get(Sequelize); // Obtiene la instancia de Sequelize
+  await sequelize.sync(); // Forzar la sincronización
   app.setGlobalPrefix('api/v1');
   app.enableCors();
 

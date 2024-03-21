@@ -11,17 +11,14 @@ export class ClientsService {
         private patientModel: typeof Patient
     ) { }
 
-    async getAllPatients(page: number, limit: number): Promise<{ items: Patient[]; total: number }> {
+    async getAllPatients(page: number, limit: number): Promise<Patient[]> {
         const offset = (page - 1) * limit;
         const patients = await this.patientModel.findAndCountAll({
             limit: limit,
             offset: offset,
         });
-
-        return {
-            items: patients.rows,
-            total: patients.count,
-        };
+    
+        return patients.rows;
     }
 
     async getOnePatient(id: number): Promise<Patient> {
@@ -67,7 +64,6 @@ export class ClientsService {
         }
 
         await patient.update(newPatient);
-        return 'Paciente registrado';
 
     }
 
@@ -87,7 +83,8 @@ export class ClientsService {
         }
 
         await patient.destroy();
-        return 'El paciente fue eliminado correctamente';
+
+        return { "message": "El paciente fue eliminado correctamente" }
 
     }
 

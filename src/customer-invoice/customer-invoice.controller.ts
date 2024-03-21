@@ -8,7 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class customerInvoiceController {
     constructor(private customerInvoiceService:CustomerInvoiceService){}
 
-    @Get('getCustomerInvoices')
+    @Get('getCustomerInvoices/:page/:limit')
     getCustomerInvoices(@Param('page') page:number, @Param('limit') limit:number){
         return this.customerInvoiceService.getCustomerInvoices(page, limit)
     }
