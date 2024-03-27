@@ -18,7 +18,4 @@ export class Service extends Model<Service> {
     @Column
     customerInvoiceId: number;
 
-    @BelongsTo(() => Appointment)
-    appointment: Appointment;
-
 }
