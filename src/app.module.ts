@@ -25,6 +25,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { ReminderModule } from './reminder/reminder.module';
 import { NotificationModule } from './notification/notification.module';
+import { ToothController } from './tooth/tooth.controller';
+import { ToothModule } from './tooth/tooth.module';
+import { TeethController } from './teeth/teeth.controller';
+import { TeethService } from './teeth/teeth.service';
+import { TeethModule } from './teeth/teeth.module';
 
 @Module({
   imports: [
@@ -52,13 +57,16 @@ import { NotificationModule } from './notification/notification.module';
     EmployeesModule,
     NotificationModule,
     ReminderModule,
+    ToothModule,
+    TeethModule,
   ],
-  controllers: [],
+  controllers: [ToothController, TeethController],
   providers: [
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    TeethService,
   ],
   exports: [patientsModule], 
 })
