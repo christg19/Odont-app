@@ -3,7 +3,7 @@ import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-valida
 export class UpdateAppointmentDto {
     @IsString()
     @IsOptional()
-    readonly appointmentDate?: Date
+    readonly appointmentDate?: string
     @IsString()
     @IsOptional()
     readonly notes?:string
@@ -13,4 +13,18 @@ export class UpdateAppointmentDto {
     @IsNumber()
     @IsOptional()
     readonly patientId?:number
+
+    @IsOptional()
+    readonly appointmentHour?:string;
+
+    @IsOptional()
+    servicesName?: string[];
+
+    @IsNumber()
+    @IsOptional()
+    totalCost?:number;
+    
+    @IsString()
+    @IsOptional()
+    patientName?:string;
 }

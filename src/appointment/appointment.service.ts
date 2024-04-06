@@ -98,23 +98,65 @@ export class AppointmentsService {
 
     async updateAppointment(dto: UpdateAppointmentDto, id: number) {
         if (id <= 0) {
-            throw new BadRequestException('El ID de la cita no es válido')
+            throw new BadRequestException('El ID de la cita no es válido');
         }
-
+    
         const appointment = await this.appointmentModel.findOne({
-            where: {
-                id: id
-            }
+            where: { id }
         });
-
-        if(!appointment){
-            throw new NotFoundException('Cita no encontrada')
+    
+        if (!appointment) {
+            throw new NotFoundException('Cita no encontrada');
         }
+    
+        let services: Service[] = [];
+        let servicesName: string[] = [];
+    
+      
+        if (dto.serviceIds && dto.serviceIds.length > 0) {
+            services = await Service.findAll({
+                where: {
+                    id: {
+                        [Sequelize.Op.in]: dto.serviceIds
+                    }
+                }
+            });
+    
+            servicesName = services.map(service => service.name);
+    
+            if (services.length !== dto.serviceIds.length) {
+                throw new Error('Algunos IDs de servicio proporcionados no son válidos.');
+            }
+    
+           
+            dto.servicesName = servicesName;
+            dto.totalCost = services.reduce((acc, service) => acc + service.cost, 0);
+        }
+    
+     
+        if (dto.patientId) {
+            const patient = await this.patientModel.findOne({
+                where: { id: dto.patientId }
+            });
+    
+            if (!patient) {
+                throw new NotFoundException('Paciente no encontrado');
+            }
+    
+            dto.patientName = patient.name;
+        }
+    
 
         await appointment.update(dto);
-        return 'La cita fue actualizada correctamente'
+    
 
+        if (services.length > 0) {
+            await appointment.$set('service', services);
+        }
+    
+        return appointment;
     }
+    
 
     async deleteAppointment(id: number) {
         if (id <= 0) {
@@ -122,17 +164,27 @@ export class AppointmentsService {
         }
     
         const appointment = await this.appointmentModel.findOne({
-            where: {
-                id: id,
-            },
+            where: { id },
+            include: [{
+                model: Service,
+                as: 'service'
+            }]
         });
     
         if (!appointment) {
             throw new NotFoundException('Cita no encontrada');
         }
     
+        if (appointment.service && appointment.service.length > 0) {
+            for (const service of appointment.service) {
+                await service.update({ appointmentId: null });
+            }
+        }
+    
+       
         await appointment.destroy();
         return 'Cita eliminada correctamente';
     }
+    
 
 }

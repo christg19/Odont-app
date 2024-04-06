@@ -5,7 +5,7 @@ import { Service } from 'src/service/service.entity';
 @Table
 export class Appointment extends Model<Appointment> {
   @Column
-  appointmentDate: Date;
+  appointmentDate: string;
 
   @Column
   patientName: string;
