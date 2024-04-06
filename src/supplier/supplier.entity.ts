@@ -18,7 +18,5 @@ export class Supplier extends Model<Supplier> {
 
     @Column
     balance:number
-
-    @HasMany(() => Product)
-    product: Product[];
+    
 }

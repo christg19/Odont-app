@@ -1,15 +1,27 @@
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDate } from "sequelize-typescript";
+import { Categories } from "../product.entity";
+
 export class CreateProductDto {
     
-    readonly proveedorId:number;
-    
+    @IsString()
+    @IsNotEmpty()
     readonly name:string;
 
-    readonly costToBuy:number;
+    @IsNotEmpty()
+    readonly unitDate: Date;
 
-    readonly priceToSell:number;
+    @IsString()
+    @IsOptional()
+    readonly notes?: string;
 
-    readonly units:number;
+    @IsOptional()
+    readonly expiryDate?:Date;
+    
+    @IsString()
+    readonly categoryProduct:Categories;
 
-    readonly categoryProductId: number;
+    @IsOptional()
+    readonly instrumentalState:boolean;
 
 }

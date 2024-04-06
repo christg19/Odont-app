@@ -7,9 +7,9 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('product')
 export class ProductController {
     constructor(private productService: ProductService){}
-    @Get('getProducts/:page/:limit')
-    getProducts(@Param('page') page:number, @Param('limit') limit:number){
-        return this.productService.getProducts(page, limit);
+    @Get('getProducts')
+    getProducts(){
+        return this.productService.getProducts();
     }
 
     @Get('getProductById/:id')

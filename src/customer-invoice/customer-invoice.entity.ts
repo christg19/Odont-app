@@ -16,7 +16,7 @@ export class CustomerInvoice extends Model<CustomerInvoice> {
     patientName: string;
 
     @Column
-    dateAppointment: Date;
+    dateAppointment: string;
 
     @Column
     cost: number;

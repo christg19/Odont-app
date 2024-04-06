@@ -2,27 +2,31 @@ import { Column, Table, Model, HasOne, ForeignKey, BelongsTo } from "sequelize-t
 import { CategoryProduct } from "src/category-product/category-product.entity";
 import { Supplier } from "src/supplier/supplier.entity";
 
+export enum Categories {
+    CHEMICAL = "Quimico",
+    DISPOSABLE = "Desechable",
+    INSTRUMENTAL = "Instrumento"
+}
+
 @Table({ tableName: 'Product' })
 export class Product extends Model<Product> {
-    @ForeignKey(() => Supplier)
-    @Column
-    proveedorId:number;
-
-    @BelongsTo(() => Supplier)
-    supplier:Supplier;
 
     @Column
-    name:string;
+    name: string;
 
     @Column
-    costToBuy:number;
+    unitDate: Date;
 
     @Column
-    priceToSell:number;
+    notes?: string;
 
     @Column
-    units:number;
+    expiryDate?: Date;
 
-    @HasOne(() => CategoryProduct)
-    categoryProduct: CategoryProduct;
+    @Column
+    instrumentalState?:boolean;
+
+    @Column
+    categoryProduct: Categories;
+
 }

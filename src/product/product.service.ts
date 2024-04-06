@@ -7,78 +7,62 @@ import { CategoryProduct } from 'src/category-product/category-product.entity';
 @Injectable()
 export class ProductService {
     constructor(@InjectModel(Product) private productModel: typeof Product,
-    @InjectModel(CategoryProduct) private categoryProductModel: typeof CategoryProduct){}
+        @InjectModel(CategoryProduct) private categoryProductModel: typeof CategoryProduct) { }
 
-    async getProducts(page:number, limit:number): Promise<{items: Product[], total:number}>{
-        const offset = (page-1)*limit;
-        const product = await this.productModel.findAndCountAll({
-            limit:limit,
-            offset:offset
-        });
-
-        return {
-            items: product.rows,
-            total: product.count,
+        async getProducts(): Promise<Product[]> {
+            const products = await this.productModel.findAll();
+            return products;
         }
-    }
+        
 
-    async getOneProduct(id:number): Promise<Product>{
-        if(id <= 0){
+    async getOneProduct(id: number): Promise<Product> {
+        if (id <= 0) {
             throw new Error('El ID no es válido');
         };
 
         const product = this.productModel.findOne({
             where: {
-                id:id
+                id: id
             }
         });
 
-        if(!product){
+        if (!product) {
             throw new NotFoundException('Producto no encontrado');
         }
 
         return product;
     }
 
-   async createProduct(newProduct:CreateProductDto){
-        if(newProduct.categoryProductId <= 0){
-            throw new Error ('El ID no es válido');
-        };
-
-        const categoryProduct:CategoryProduct = await this.categoryProductModel.findOne({
-            where: {
-                id: newProduct.categoryProductId
-            }
-        })
+    async createProduct(newProduct: CreateProductDto) {
 
         try {
             const product: Product = await this.productModel.create({
-                proveedorId:newProduct.proveedorId,
-                name:newProduct.name,
-                costToBuy:newProduct.costToBuy,
-                priceToSell:newProduct.priceToSell,
-                units:newProduct.units,
-                categoryProduct: categoryProduct
-            });
-            
+                name: newProduct.name,
+                unitDate: newProduct.unitDate,
+                notes: newProduct.notes,
+                expiryDate: newProduct.expiryDate,
+                categoryProduct: newProduct.categoryProduct,
+                instrumentalState: newProduct.instrumentalState
+            }); 
+
             return product;
         } catch (error) {
             throw new Error(error);
         }
     }
 
-   async updateProduct(dto:UpdatedProductDto, id:number){
-        if(id <= 0){
+    async updateProduct(dto: UpdatedProductDto, id: number) {
+        if (id <= 0) {
             throw new Error('El ID no es válido');
         };
 
         const product = await this.productModel.findOne({
-            where:{
-                id:id
+            where: {
+                id: id
             }
         });
 
-        if(!product){
+        if (!product) {
             throw new Error('Producto no encontrado');
         };
 
@@ -86,16 +70,16 @@ export class ProductService {
         return 'El producto fue actualizado';
     }
 
-    async deleteProduct(id:number){
-        if(id <= 0){
+    async deleteProduct(id: number) {
+        if (id <= 0) {
             throw new Error('El ID no es válido');
         };
         const product = await this.productModel.findOne({
-            where:{
-                id:id
+            where: {
+                id: id
             }
         });
-        if(!product){
+        if (!product) {
             throw new NotFoundException('Producto no encontrado');
         }
 
