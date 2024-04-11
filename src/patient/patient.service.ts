@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreatePatientDto, UpdatePatientDto } from './dto';
 import { Patient } from './patient.entity';
+import { Dues } from 'src/dues/dues.entity';
 
 @Injectable()
 export class ClientsService {
@@ -11,14 +12,15 @@ export class ClientsService {
         private patientModel: typeof Patient
     ) { }
 
-    async getAllPatients(page: number, limit: number): Promise<Patient[]> {
-        const offset = (page - 1) * limit;
-        const patients = await this.patientModel.findAndCountAll({
-            limit: limit,
-            offset: offset,
-        });
-    
-        return patients.rows;
+    async getAllPatients(): Promise<Patient[]> {
+        const patientWithDues = await Patient.findAll({
+            include: [{
+              model: Dues,
+              as: 'dues' 
+            }]
+          });
+
+          return patientWithDues;
     }
 
     async getOnePatient(id: number): Promise<Patient> {

@@ -5,9 +5,10 @@ import { ClientsService } from './patient.service';
 import { Patient } from './patient.entity';
 import { CustomerInvoice } from 'src/customer-invoice/customer-invoice.entity';
 import { Service } from 'src/service/service.entity';
+import { Dues } from 'src/dues/dues.entity';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Patient, CustomerInvoice, Service])],
+  imports: [SequelizeModule.forFeature([Patient, CustomerInvoice, Service, Dues])],
   providers: [ClientsService],
   controllers: [ClientsController],
 })

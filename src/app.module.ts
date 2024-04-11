@@ -30,6 +30,9 @@ import { ToothModule } from './tooth/tooth.module';
 import { TeethController } from './teeth/teeth.controller';
 import { TeethService } from './teeth/teeth.service';
 import { TeethModule } from './teeth/teeth.module';
+import { AppointmentService } from './appointment/appointmentServices.entity';
+import { DuesModule } from './dues/dues.module';
+import { Dues } from './dues/dues.entity';
 
 @Module({
   imports: [
@@ -40,7 +43,7 @@ import { TeethModule } from './teeth/teeth.module';
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
-      models: [User, Patient, Appointment, DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee],
+      models: [User, Patient, Appointment, AppointmentService, Dues ,DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee],
       logging: console.log,
       
     }),
@@ -59,6 +62,7 @@ import { TeethModule } from './teeth/teeth.module';
     ReminderModule,
     ToothModule,
     TeethModule,
+    DuesModule,
   ],
   controllers: [ToothController, TeethController],
   providers: [

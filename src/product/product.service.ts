@@ -43,7 +43,7 @@ export class ProductService {
                 expiryDate: newProduct.expiryDate,
                 categoryProduct: newProduct.categoryProduct,
                 instrumentalState: newProduct.instrumentalState
-            }); 
+            });
 
             return product;
         } catch (error) {
@@ -67,7 +67,7 @@ export class ProductService {
         };
 
         await product.update(dto);
-        return 'El producto fue actualizado';
+     
     }
 
     async deleteProduct(id: number) {
@@ -84,6 +84,6 @@ export class ProductService {
         }
 
         await product.destroy();
-        return 'Producto eliminado correctamente';
+
     }
 }

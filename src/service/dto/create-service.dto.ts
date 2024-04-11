@@ -8,4 +8,11 @@ export class CreateServiceDto {
     @IsNotEmpty()
     @IsNumber()
     cost: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    duesQuantity:number;
+
+    @IsNotEmpty()
+    productIds:string[];
 }

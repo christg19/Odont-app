@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { IsDate } from "sequelize-typescript";
+import { Categories } from "../product.entity";
 
 export class UpdatedProductDto {
     
@@ -16,5 +17,9 @@ export class UpdatedProductDto {
 
     @IsOptional()
     readonly expiryDate?:Date;
+
+    @IsString()
+    @IsOptional()
+    readonly categoryProduct?:Categories;
     
 }

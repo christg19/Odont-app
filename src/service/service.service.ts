@@ -24,21 +24,19 @@ export class ServiceService {
         return this.serviceModel.create(dto);
     }
 
-    async update(dto: UpdateServiceDto, id: number): Promise<string> {
+    async update(dto: UpdateServiceDto, id: number){
         const service = await this.serviceModel.findByPk(id);
         if (!service) {
             throw new NotFoundException('Servicio no encontrado');
         }
         await service.update(dto);
-        return 'Servicio actualizado correctamente';
     }
 
-    async delete(id: number): Promise<string> {
+    async delete(id: number) {
         const service = await this.serviceModel.findByPk(id);
         if (!service) {
             throw new NotFoundException('Servicio no encontrado');
         }
         await service.destroy();
-        return 'El servicio fue eliminado correctamente';
     }
 }

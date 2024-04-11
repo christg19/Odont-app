@@ -9,9 +9,9 @@ import { ApiTags } from '@nestjs/swagger';
 export class ClientsController {
     constructor(private clientService: ClientsService){}
 
-    @Get('getPatients/:page/:limit')
-    async getPatients(@Param('page') page: number, @Param('limit') limit: number) {
-      return this.clientService.getAllPatients(page, limit); 
+    @Get('getPatients')
+    async getPatients() {
+      return this.clientService.getAllPatients(); 
     }
 
     @Get('getPatientById/:id')
