@@ -5,18 +5,19 @@ export class CreateAppointmentDto {
     @IsString()
     @IsNotEmpty()
     readonly appointmentDate: string
+
     @IsString()
     @IsOptional()
-    readonly notes?:string
+    readonly notes?: string
 
-    readonly appointmentHour?:string;
+    readonly appointmentHour?: string;
     
-    readonly servicesName?: string[];
-   
+    @IsNumber({}, { each: true })
     @IsNotEmpty()
     readonly serviceIds: number[];
+
     @IsNumber()
     @IsNotEmpty()
-    readonly patientId:number
+    readonly patientId: number
 
 }

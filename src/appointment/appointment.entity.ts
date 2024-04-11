@@ -1,6 +1,7 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasMany, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsTo, ForeignKey, HasMany, DataType, BelongsToMany } from 'sequelize-typescript';
 import { Patient } from 'src/patient/patient.entity';
 import { Service } from 'src/service/service.entity';
+import { AppointmentService } from './appointmentServices.entity';
 
 @Table
 export class Appointment extends Model<Appointment> {
@@ -10,21 +11,24 @@ export class Appointment extends Model<Appointment> {
   @Column
   patientName: string;
 
-  @ForeignKey(() => Patient) 
+  @ForeignKey(() => Patient)
   @Column
   patientId: number;
 
-  @Column
-  notes:string;
+  @Column({
+    type: DataType.ARRAY(DataType.INTEGER),
+  })
+  serviceIds: number[];
 
   @Column
-  totalCost:number;
+  notes: string;
 
-  @Column(DataType.ARRAY(DataType.STRING))
-  servicesName: string[];
+  @Column
+  totalCost: number;
 
-  @HasMany(() => Service)
+  @BelongsToMany(() => Service, () => AppointmentService)
   service: Service[];
+
 
   @BelongsTo(() => Patient)
   patient: Patient;
