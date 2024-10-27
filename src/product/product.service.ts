@@ -86,4 +86,13 @@ export class ProductService {
         await product.destroy();
 
     }
+
+    async patchProduct(id: number, dto: Partial<UpdatedProductDto>) {
+        const product = await this.productModel.findByPk(id);
+        if (!product) {
+            throw new NotFoundException('Product no encontrado');
+        }
+    
+        await product.update(dto);
+    }
 }

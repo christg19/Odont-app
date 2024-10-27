@@ -53,6 +53,15 @@ export class DuesService {
 
     }
 
+    async patchDue(id: number, dto: Partial<UpdateDueDto>) {
+        const due = await this.dueModel.findByPk(id);
+        if (!due) {
+            throw new NotFoundException('Due not found');
+        }
+    
+        await due.update(dto);
+    }
+
 
     async deleteDue(id: number) {
 

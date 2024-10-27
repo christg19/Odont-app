@@ -97,7 +97,7 @@ export class AppointmentsService {
                 patientName: patient.name,
                 notes: dto.notes,
                 serviceIds: dto.serviceIds,
-                totalCost,
+                totalCost: dto.totalCost,
                 patientId: patient.id,
             };
 
@@ -213,3 +213,5 @@ export class AppointmentsService {
 
 
 }
+
+

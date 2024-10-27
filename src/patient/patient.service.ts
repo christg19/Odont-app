@@ -28,17 +28,21 @@ export class ClientsService {
             throw new Error('El ID no es válido');
         }
 
-        const patient = await this.patientModel.findOne({
-            where: {
-                id: id
-            }
-        });
+        const patientWithDues = await Patient.findOne({
+            where:{
+                id:id
+            },
+            include: [{
+              model: Dues,
+              as: 'dues' 
+            }]
+          });
 
-        if (!patient) {
+        if (!patientWithDues) {
             throw new NotFoundException('Paciente no encontrado');
         };
 
-        return patient;
+        return patientWithDues;
 
     }
 

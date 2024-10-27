@@ -28,4 +28,8 @@ export class UpdateAppointmentDto {
     @IsString()
     @IsOptional()
     patientName?: string;
+
+    @IsNumber()
+    @IsOptional()
+    readonly duesCost?:number;
 }

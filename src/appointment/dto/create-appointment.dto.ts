@@ -20,4 +20,11 @@ export class CreateAppointmentDto {
     @IsNotEmpty()
     readonly patientId: number
 
+    @IsNumber()
+    @IsOptional()
+    readonly totalCost?:number;
+
+    @IsNumber()
+    @IsOptional()
+    readonly duesCost?:number;
 }

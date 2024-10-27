@@ -9,6 +9,10 @@ export class CreateDueDto {
     @IsNotEmpty()
     serviceId:number;
 
+    @IsString()
+    @IsNotEmpty()
+    name:string;
+
     @IsNumber()
     @IsNotEmpty()
     dueQuantity:number;

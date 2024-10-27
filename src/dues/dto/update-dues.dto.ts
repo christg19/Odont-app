@@ -8,6 +8,10 @@ export class UpdateDueDto {
     @IsNumber()
     @IsOptional()
     serviceId:number;
+    
+    @IsString()
+    @IsOptional()
+    name:string;
 
     @IsNumber()
     @IsOptional()

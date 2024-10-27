@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, UpdatedProductDto } from './dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -30,5 +30,10 @@ export class ProductController {
     @Delete('deleteProduct/:id')
     deleteProduct(@Param('id') id:number){
         return this.productService.deleteProduct(id);
+    }
+
+    @Patch('patchProduct/:id')
+    patchDue(@Param('id') id: number, @Body() dto: Partial<UpdatedProductDto>) {
+        return this.productService.patchProduct(id, dto);
     }
 }

@@ -26,4 +26,7 @@ export class Service extends Model<Service> {
     @Column
     customerInvoiceId: number;
 
+    @Column
+    itemType:string = 'service';
+
 }

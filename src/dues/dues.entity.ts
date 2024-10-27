@@ -9,6 +9,9 @@ export class Dues extends Model<Dues> {
   @Column
   patientId: number;
 
+  @Column
+  name:string;
+
   @ForeignKey(() => Service)
   @Column
   serviceId: number;
@@ -21,6 +24,9 @@ export class Dues extends Model<Dues> {
 
   @BelongsTo(() => Patient)
   patient: Patient;
+
+  @Column
+  itemType:string = 'due'
 
 }
 
