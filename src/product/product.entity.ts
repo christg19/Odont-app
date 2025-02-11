@@ -3,9 +3,9 @@ import { CategoryProduct } from "src/category-product/category-product.entity";
 import { Supplier } from "src/supplier/supplier.entity";
 
 export enum Categories {
-    CHEMICAL = "Quimico",
-    DISPOSABLE = "Desechable",
-    INSTRUMENTAL = "Instrumento"
+    QUIMICO = "Quimico",
+    DESECHABLE = "Desechable",
+    INSTRUMENTO = "Instrumento"
 }
 
 @Table({ tableName: 'Product' })

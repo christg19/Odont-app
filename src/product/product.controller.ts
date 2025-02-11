@@ -7,32 +7,32 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('product')
 export class ProductController {
     constructor(private productService: ProductService){}
-    @Get('getProducts')
+    @Get('all')
     getProducts(){
         return this.productService.getProducts();
     }
 
-    @Get('getProductById/:id')
+    @Get(':id')
     getProductById(@Param('id') id:number){
         return this.productService.getOneProduct(id);
     }
 
-    @Post('createProduct')
+    @Post('')
     createProduct(@Body() newProduct:CreateProductDto){
         return this.productService.createProduct(newProduct);
     }
 
-    @Put('updateProduct/:id')
+    @Put(':id')
     updateProduct(@Param('id') id:number, @Body() updatedProduct:UpdatedProductDto){
         return this.productService.updateProduct(updatedProduct, id);
     }
 
-    @Delete('deleteProduct/:id')
+    @Delete(':id')
     deleteProduct(@Param('id') id:number){
         return this.productService.deleteProduct(id);
     }
 
-    @Patch('patchProduct/:id')
+    @Patch(':id')
     patchDue(@Param('id') id: number, @Body() dto: Partial<UpdatedProductDto>) {
         return this.productService.patchProduct(id, dto);
     }

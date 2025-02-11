@@ -8,7 +8,7 @@ import { Product } from 'src/product/product.entity';
 export class Service extends Model<Service> {
     @Column
     name: string;
-
+// name, cost, duesQuantity, 
     @Column
     cost: number;
 

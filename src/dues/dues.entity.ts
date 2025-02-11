@@ -17,9 +17,6 @@ export class Dues extends Model<Dues> {
   serviceId: number;
 
   @Column
-  dueQuantity:number;
-
-  @Column
   totalCost:number;
 
   @BelongsTo(() => Patient)

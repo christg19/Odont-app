@@ -4,13 +4,15 @@ import { Appointment } from './appointment.entity';
 import { AppointmentsService } from './appointment.service';
 import { PatientAppointmentsController } from './appointment.controller';
 import { Service } from 'src/service/service.entity';
-import { ClientsService } from 'src/patient/patient.service';
 import { Patient } from 'src/patient/patient.entity';
+import { Tooth } from 'src/tooth/tooth.entity';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Appointment, Service, Patient])],
+  imports: [SequelizeModule.forFeature([Appointment, Service, Patient, Tooth])],
   providers: [AppointmentsService],
   controllers: [PatientAppointmentsController],
+  exports: [AppointmentsService],
+
 })
 export class PatientAppointmentsModule {}
 

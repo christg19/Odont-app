@@ -1,4 +1,3 @@
-// appointment-service.model.ts
 import { Model, ForeignKey, Column, Table } from 'sequelize-typescript';
 import { Appointment } from './appointment.entity';
 import { Service } from 'src/service/service.entity';

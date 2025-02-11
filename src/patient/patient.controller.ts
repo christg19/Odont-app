@@ -9,27 +9,27 @@ import { ApiTags } from '@nestjs/swagger';
 export class ClientsController {
     constructor(private clientService: ClientsService){}
 
-    @Get('getPatients')
+    @Get('all')
     async getPatients() {
       return this.clientService.getAllPatients(); 
     }
 
-    @Get('getPatientById/:id')
+    @Get(':id')
     getPatientById(@Param('id') id:number){
         return this.clientService.getOnePatient(id)
     }
 
-    @Post('createPatient')
+    @Post('')
     createPatient(@Body() newPatient:CreatePatientDto){
         return this.clientService.createPatient(newPatient)
     }
 
-    @Put('updatePatient/:id')
+    @Put(':id')
     updatePatient(@Param('id') id:number, @Body() updatedClient:UpdatePatientDto){
         return this.clientService.updatePatient(updatedClient, id)
     }
 
-    @Delete('deletePatient/:id')
+    @Delete(':id')
     deletePatient(@Param('id') id:number){
         return this.clientService.deletePatient(id)
     }

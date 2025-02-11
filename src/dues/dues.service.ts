@@ -17,7 +17,13 @@ export class DuesService {
       ) { }
 
     async getAll(): Promise<Dues[]> {
-       return this.dueModel.findAll();
+       const dues: Dues[] = await this.dueModel.findAll();
+       
+      const filteredDues = dues.filter((due) => {
+       return due.totalCost > 0
+       })
+
+     return filteredDues;
     }
 
     async getDueById(id: number): Promise<Dues> {

@@ -33,6 +33,18 @@ import { TeethModule } from './teeth/teeth.module';
 import { AppointmentService } from './appointment/appointmentServices.entity';
 import { DuesModule } from './dues/dues.module';
 import { Dues } from './dues/dues.entity';
+import { ProcedureController } from './procedure/procedure.controller';
+import { ProcedureService } from './procedure/procedure.service';
+import { ProcedureModule } from './procedure/procedure.module';
+import { OdontogramController } from './odontogram/odontogram.controller';
+import { OdontogramService } from './odontogram/odontogram.service';
+import { OdontogramModule } from './odontogram/odontogram.module';
+import { Odontogram } from './odontogram/odontogram.entity';
+import { Tooth } from './tooth/tooth.entity';
+import { Procedure } from './procedure/procedure.entity';
+import { AppointmentTooth } from './appointment/appointment-tooth.entity';
+import { AppointmentCronService } from './cron-jobs/appointment.cron';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -43,10 +55,11 @@ import { Dues } from './dues/dues.entity';
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
-      models: [User, Patient, Appointment, AppointmentService, Dues ,DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee],
+      models: [User, Patient, Appointment, AppointmentService, Dues ,DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee, Odontogram, Tooth, Procedure, AppointmentTooth],
       logging: console.log,
       
     }),
+    ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
     patientsModule,
@@ -60,22 +73,29 @@ import { Dues } from './dues/dues.entity';
     EmployeesModule,
     NotificationModule,
     ReminderModule,
-    ToothModule,
     TeethModule,
     DuesModule,
+    OdontogramModule, 
+    ProcedureModule,
+    ToothModule,
+    NotificationModule
+    
   ],
-  controllers: [ToothController, TeethController],
+  controllers: [ToothController, TeethController, ProcedureController, OdontogramController],
   providers: [
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
     TeethService,
+    ProcedureService,
+    AppointmentCronService,
+ 
   ],
   exports: [patientsModule], 
 })
-
 export class AppModule {}
+
 
 
 // docker run --name odontdb -e MYSQL_ROOT_PASSWORD=testDatabase -e MYSQL_DATABASE=odontdb -p 3306:3306 -d mysql:latest

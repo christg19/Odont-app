@@ -3,13 +3,16 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreatePatientDto, UpdatePatientDto } from './dto';
 import { Patient } from './patient.entity';
 import { Dues } from 'src/dues/dues.entity';
+import { Odontogram } from 'src/odontogram/odontogram.entity';
+import { Appointment } from 'src/appointment/appointment.entity';
 
 @Injectable()
 export class ClientsService {
 
     constructor(
         @InjectModel(Patient)
-        private patientModel: typeof Patient
+        private patientModel: typeof Patient,
+        @InjectModel(Odontogram) private odontogramModel: typeof Odontogram
     ) { }
 
     async getAllPatients(): Promise<Patient[]> {
@@ -28,6 +31,10 @@ export class ClientsService {
             throw new Error('El ID no es válido');
         }
 
+        if(Number.isNaN(id)){
+            throw new Error('El ID no es la valido');
+        }
+
         const patientWithDues = await Patient.findOne({
             where:{
                 id:id
@@ -35,7 +42,8 @@ export class ClientsService {
             include: [{
               model: Dues,
               as: 'dues' 
-            }]
+            },
+        {model:Appointment}]
           });
 
         if (!patientWithDues) {
@@ -48,11 +56,15 @@ export class ClientsService {
 
     async createPatient(newPatient: CreatePatientDto): Promise<void> {
         try {
-            this.patientModel.create(newPatient);
+            const createdPatient = await this.patientModel.create(newPatient);
+
+            await this.odontogramModel.create({ patientId: createdPatient.id, tooth: [] });
+    
         } catch (error) {
             throw new Error(error);
         }
     }
+    
 
     async updatePatient(newPatient: UpdatePatientDto, id: number) {
         if (id <= 0) {
@@ -94,4 +106,5 @@ export class ClientsService {
 
     }
 
+ 
 }

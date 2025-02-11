@@ -1,4 +1,5 @@
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+import { AppointmentStatus } from '../appointment.entity';
 
 export class CreateAppointmentDto {
 
@@ -27,4 +28,18 @@ export class CreateAppointmentDto {
     @IsNumber()
     @IsOptional()
     readonly duesCost?:number;
+
+    @IsArray()
+    @IsNumber({}, { each: true })
+    @IsOptional()
+    toothIds: number[] = [];
+
+    @IsArray()
+    @IsNumber({}, { each: true })
+    @IsOptional()
+    selectedTeethPositions: number[];
+
+    @IsEnum(AppointmentStatus)
+    @IsOptional()
+    status?: AppointmentStatus;
 }

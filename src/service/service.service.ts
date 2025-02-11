@@ -39,4 +39,12 @@ export class ServiceService {
         }
         await service.destroy();
     }
+
+    async getByIds(ids: number[]): Promise<Service[]> {
+        return this.serviceModel.findAll({
+            where: {
+                id: ids,
+            },
+        });
+    }
 }

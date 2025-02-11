@@ -16,28 +16,28 @@ export class PatientAppointmentsController {
 
     constructor(private appointmentService: AppointmentsService) { }
 
-    @Get('getAllAppointments/:page/:limit')
-    getAllAppointments(@Param('page') page:number, @Param('limit') limit:number) {
-        return this.appointmentService.getAppointments(page, limit);
+    @Get('all')
+    getAllAppointments() {
+        return this.appointmentService.getAppointments();
     }
 
-    @Get('getAppointmentById/:id')
+    @Get(':id')
     getAppointmentById(@Param('id') id:number){
         return this.appointmentService.getAppointmentById(id);
     }
     
-    @Post('createAppointment')
+    @Post('')
     createAppointment(@Body() dto: CreateAppointmentDto) {
         return this.appointmentService.createAppointment(dto)
     }
     
-    @Put('updateAppointment/:id')
+    @Put(':id')
     updateAppointment(@Param('id') id:number, @Body() dto: UpdateAppointmentDto){
         return this.appointmentService.updateAppointment(dto, id)
     }
 
-    @Delete('deleteAppointment/:id')
-    DeleteAppointment(@Param('id') id:number) {
+    @Delete(':id')
+    deleteAppointment(@Param('id') id:number) {
         return this.appointmentService.deleteAppointment(id)
     }
 

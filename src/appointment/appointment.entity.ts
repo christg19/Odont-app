@@ -2,6 +2,14 @@ import { Table, Column, Model, BelongsTo, ForeignKey, HasMany, DataType, Belongs
 import { Patient } from 'src/patient/patient.entity';
 import { Service } from 'src/service/service.entity';
 import { AppointmentService } from './appointmentServices.entity';
+import { Tooth } from 'src/tooth/tooth.entity';
+import { AppointmentTooth } from './appointment-tooth.entity';
+
+export enum AppointmentStatus {
+  Pendiente = 0,
+  Completada = 1,
+  Cancelada = 2,
+}
 
 @Table
 export class Appointment extends Model<Appointment> {
@@ -23,6 +31,13 @@ export class Appointment extends Model<Appointment> {
   @Column
   notes: string;
 
+  @Column({
+    type: DataType.INTEGER, 
+    allowNull: false,
+    defaultValue: AppointmentStatus.Pendiente,
+  })
+  status: AppointmentStatus;
+
   @Column
   totalCost: number;
 
@@ -32,5 +47,8 @@ export class Appointment extends Model<Appointment> {
 
   @BelongsTo(() => Patient)
   patient: Patient;
+
+  @BelongsToMany(() => Tooth, () => AppointmentTooth)
+  teeth: Tooth[];
 }
 
