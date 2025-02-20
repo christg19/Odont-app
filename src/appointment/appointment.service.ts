@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { Injectable, Logger } from '@nestjs/common';
 import { Appointment, AppointmentStatus } from './appointment.entity';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './dto';
@@ -397,4 +395,3 @@ export class AppointmentsService {
 
 
 
->>>>>>> 0b059f54a7a49b9e983b323fd2aa1ed8a7e79445
