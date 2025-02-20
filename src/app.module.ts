@@ -37,7 +37,6 @@ import { ProcedureController } from './procedure/procedure.controller';
 import { ProcedureService } from './procedure/procedure.service';
 import { ProcedureModule } from './procedure/procedure.module';
 import { OdontogramController } from './odontogram/odontogram.controller';
-import { OdontogramService } from './odontogram/odontogram.service';
 import { OdontogramModule } from './odontogram/odontogram.module';
 import { Odontogram } from './odontogram/odontogram.entity';
 import { Tooth } from './tooth/tooth.entity';
@@ -45,6 +44,12 @@ import { Procedure } from './procedure/procedure.entity';
 import { AppointmentTooth } from './appointment/appointment-tooth.entity';
 import { AppointmentCronService } from './cron-jobs/appointment.cron';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AntecedentsModule } from './antecedents/antecedents.module';
+import { Antecedent } from './antecedents/antecedents.entity';
+import { AntecedentAttachment } from './antecedents-attachment/antecedentAttachment.entity';
+import { AntecedentAttachmentsModule } from './antecedents-attachment/antecedents-attachment.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -55,9 +60,13 @@ import { ScheduleModule } from '@nestjs/schedule';
       username: 'root',
       password: 'testDatabase',
       database: 'odontdb',
-      models: [User, Patient, Appointment, AppointmentService, Dues ,DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee, Odontogram, Tooth, Procedure, AppointmentTooth],
+      models: [User, Patient, Appointment, AppointmentService, Dues ,DentalRecord, Service, CustomerInvoice, CategoryProduct, Supplier, Product, Employee, Odontogram, Tooth, Procedure, AppointmentTooth, Antecedent, AntecedentAttachment],
       logging: console.log,
       
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads',
     }),
     ScheduleModule.forRoot(),
     UsersModule,
@@ -78,7 +87,9 @@ import { ScheduleModule } from '@nestjs/schedule';
     OdontogramModule, 
     ProcedureModule,
     ToothModule,
-    NotificationModule
+    NotificationModule,
+    AntecedentsModule,
+    AntecedentAttachmentsModule
     
   ],
   controllers: [ToothController, TeethController, ProcedureController, OdontogramController],

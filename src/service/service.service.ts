@@ -22,7 +22,7 @@ export class ServiceService {
 
     async create(dto: CreateServiceDto): Promise<Service> {
         return this.serviceModel.create(dto);
-    }
+    }    
 
     async update(dto: UpdateServiceDto, id: number){
         const service = await this.serviceModel.findByPk(id);

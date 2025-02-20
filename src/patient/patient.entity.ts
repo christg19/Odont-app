@@ -3,6 +3,7 @@ import { DentalRecord } from 'src/dental-record/dental-record.entity';
 import { Appointment } from 'src/appointment/appointment.entity';
 import { Dues } from 'src/dues/dues.entity';
 import { Odontogram } from 'src/odontogram/odontogram.entity';
+import { Antecedent } from 'src/antecedents/antecedents.entity';
 
 @Table
 export class Patient extends Model<Patient> {
@@ -10,16 +11,16 @@ export class Patient extends Model<Patient> {
   name: string;
 
   @Column
-  age:number
+  age: number;
 
   @Column
-  address:string
+  address: string;
   
   @Column
-  tel:string
+  tel: string;
 
   @Column
-  email: string
+  email: string;
 
   @HasOne(() => DentalRecord)
   dentalRecord: DentalRecord;
@@ -32,6 +33,8 @@ export class Patient extends Model<Patient> {
 
   @HasMany(() => Dues)
   dues: Dues[];
-}
 
+  @HasMany(() => Antecedent)
+  antecedents: Antecedent[];
+}
 

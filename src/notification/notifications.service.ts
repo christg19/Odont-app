@@ -5,8 +5,10 @@ export interface AppointmentSubject {
   patientName: string;
   date: string;
   seen: boolean;
-  type: 'upcoming' | 'completed';
+  type: 'upcoming' | 'completed' | 'expired';
+  productId?: number; 
 }
+
 
 @Injectable()
 export class NotificationsService {

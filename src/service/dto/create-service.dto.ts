@@ -1,4 +1,16 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsArray, ValidateNested } from "class-validator";
+import { Type } from 'class-transformer';
+import { Categories } from "../service.entity";
+
+class ProductUsageDto {
+  @IsNotEmpty()
+  @IsNumber()
+  productId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  quantity: number;
+}
 
 export class CreateServiceDto {
     @IsNotEmpty()
@@ -11,8 +23,11 @@ export class CreateServiceDto {
 
     @IsNotEmpty()
     @IsNumber()
-    duesQuantity:number;
+    duesQuantity: number;
 
     @IsNotEmpty()
-    productIds:string[];
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => ProductUsageDto)
+    productUsages: ProductUsageDto[];
 }

@@ -22,9 +22,15 @@ export class Product extends Model<Product> {
 
     @Column
     expiryDate?: Date;
-
+    
     @Column
     instrumentalState?:boolean;
+
+    @Column
+    used:boolean;
+
+    @Column
+    quantity:number;
 
     @Column
     categoryProduct: Categories;

@@ -9,6 +9,7 @@ import { CategoryProduct } from 'src/category-product/category-product.entity';
   imports: [SequelizeModule.forFeature([Product, CategoryProduct])],
   providers: [ProductService],
   controllers: [ProductController],
+  exports: [ProductService], 
 })
-
 export class ProductModule {}
+
