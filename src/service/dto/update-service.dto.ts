@@ -14,5 +14,5 @@ export class UpdateServiceDto {
     duesQuantity:number;
 
     @IsOptional()
-    productIds:string[];
+    productIds:number[];
 }
